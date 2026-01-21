@@ -1853,6 +1853,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2e3901ca7c044c8479b2e4dee397316a, type: 2}
   - {fileID: 11400000, guid: bb1893d7e1d71c2488530ba64f99aa12, type: 2}
   - {fileID: 11400000, guid: fcc99323d09a17f4694c0aaa97052d58, type: 2}
+  - {fileID: 11400000, guid: 56dc6b08358c1c24fb647b78e52383a8, type: 2}
+  - {fileID: 11400000, guid: 829f18532ec356446b1d18b1977958d2, type: 2}
   targetRenderer: {fileID: 1784329910}
   player: {fileID: 572696209}
   checker: {fileID: 894979249}

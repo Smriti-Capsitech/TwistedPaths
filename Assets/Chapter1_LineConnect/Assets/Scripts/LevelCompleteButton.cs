@@ -50,7 +50,7 @@ public class LevelCompleteButtons : MonoBehaviour
         int currentLevel = PlayerPrefs.GetInt("CURRENT_LEVEL", 0);
 
         // ✅ Chapter 1 ends at Level 15 (index 14)
-        if (currentLevel >= 14)
+        if (currentLevel >= 16)
         {
             SceneManager.LoadScene("ChapterSelectScene");
             return;
