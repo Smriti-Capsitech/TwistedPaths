@@ -1,7 +1,8 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(LineRenderer))]
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(CapsuleCollider2D))]
 public class RopeController_1 : MonoBehaviour
 {
     public Transform nodeA;
@@ -11,6 +12,8 @@ public class RopeController_1 : MonoBehaviour
     [HideInInspector] public int moveOrder;
 
     private LineRenderer lr;
+    private Rigidbody2D rb;
+    private CapsuleCollider2D col;
 
     private bool isStuck = false;
     private Vector3 stuckPoint;
@@ -31,47 +34,64 @@ public class RopeController_1 : MonoBehaviour
     void Awake()
     {
         lr = GetComponent<LineRenderer>();
+        rb = GetComponent<Rigidbody2D>();
+        col = GetComponent<CapsuleCollider2D>();
+
         lr.useWorldSpace = true;
+
+        rb.bodyType = RigidbodyType2D.Kinematic;
+        rb.simulated = true;
     }
 
     void LateUpdate()
     {
         if (nodeA == null || nodeB == null) return;
-        if (GameManager.Instance == null) return;
-        if (GameManager.Instance.ropes == null) return;
-
-        isStuck = false;
-
-        // ----------------------------------
-        // INTERSECTION CHECK (ORDER-BASED)
-        // ----------------------------------
-        foreach (var other in GameManager.Instance.ropes)
-        {
-            if (other == null || other == this) continue;
-            if (other.nodeA == null || other.nodeB == null) continue;
-
-            // Only higher-order ropes can block this rope
-            if (other.GetOrder() <= GetOrder())
-                continue;
-
-            if (GameManager.Instance.TryGetIntersection(
-                nodeA.position,
-                nodeB.position,
-                other.nodeA.position,
-                other.nodeB.position,
-                out Vector2 hit))
-            {
-                isStuck = true;
-                stuckPoint = new Vector3(
-                    hit.x,
-                    hit.y,
-                    (nodeA.position.z + nodeB.position.z) * 0.5f
-                );
-                break;
-            }
-        }
 
         DrawRealisticRope();
+        UpdateCollider();
+    }
+
+    // ==================================================
+    // PHYSICS COLLISION
+    // ==================================================
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        var other = collision.collider.GetComponent<RopeController_1>();
+        if (other == null) return;
+
+        // Bottom rope is locked
+        if (IsBelow(other) && GetOrder() < other.GetOrder())
+        {
+            SetMovable(false);
+
+            ContactPoint2D cp = collision.contacts[0];
+            stuckPoint = new Vector3(cp.point.x, cp.point.y, transform.position.z);
+            isStuck = true;
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        var other = collision.collider.GetComponent<RopeController_1>();
+        if (other == null) return;
+
+        isStuck = false;
+        SetMovable(true);
+    }
+
+    // ==================================================
+    // COLLIDER UPDATE
+    // ==================================================
+    void UpdateCollider()
+    {
+        Vector3 mid = (nodeA.position + nodeB.position) * 0.5f;
+        transform.position = mid;
+
+        Vector3 dir = nodeB.position - nodeA.position;
+        float length = dir.magnitude;
+
+        col.size = new Vector2(length, normalWidth);
+        transform.right = dir.normalized;
     }
 
     // ==================================================
@@ -105,7 +125,7 @@ public class RopeController_1 : MonoBehaviour
     }
 
     // ==================================================
-    // ORDER & MOVEMENT CONTROL
+    // ORDER & LOGIC (RESTORED)
     // ==================================================
     public void SetOrder(int order)
     {
@@ -113,19 +133,17 @@ public class RopeController_1 : MonoBehaviour
         lr.sortingOrder = order;
     }
 
-    public int GetOrder() => moveOrder;
-
-    /// <summary>
-    /// Highest Y value of this rope
-    /// </summary>
-    public float GetTopY()
+    public int GetOrder()
     {
-        return Mathf.Max(nodeA.position.y, nodeB.position.y);
+        return moveOrder;
     }
 
-    /// <summary>
-    /// Logic-only movement lock
-    /// </summary>
+    public bool IsBelow(RopeController_1 other)
+    {
+        return Mathf.Max(nodeA.position.y, nodeB.position.y) <
+               Mathf.Max(other.nodeA.position.y, other.nodeB.position.y);
+    }
+
     public void SetMovable(bool movable)
     {
         isMovable = movable;
@@ -135,7 +153,7 @@ public class RopeController_1 : MonoBehaviour
     // ==================================================
     // VISUAL FEEDBACK
     // ==================================================
-    public void SetHighlight(bool active)
+    void SetHighlight(bool active)
     {
         lr.startColor = active ? highlightColor : normalColor;
         lr.endColor = active ? highlightColor : normalColor;

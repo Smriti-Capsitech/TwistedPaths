@@ -30,7 +30,7 @@ public class NodeDrag : MonoBehaviour
     private Slot dragStartSlot;
  
  
-    // 🔒 Cached slots (stable & safe)
+    //  Cached slots (stable & safe)
     private static Slot[] cachedSlots;
  
     // ==================================================
@@ -55,7 +55,7 @@ public class NodeDrag : MonoBehaviour
  
     void LateUpdate()
     {
-        // 🔐 HARD RULE: Node must always sit in its slot
+        //  HARD RULE: Node must always sit in its slot
         if (!isDragging && currentSlot != null)
         {
             transform.position = currentSlot.transform.position;
@@ -70,7 +70,7 @@ public class NodeDrag : MonoBehaviour
         if (rope == null || !rope.isMovable)
             return;
  
-        dragStartSlot = currentSlot;   // 🔑 remember original slot
+        dragStartSlot = currentSlot;   //  remember original slot
  
         if (GameManager.Instance != null)
             GameManager.Instance.PromoteRope(rope);
@@ -113,7 +113,7 @@ public class NodeDrag : MonoBehaviour
         {
             AttachToSlot(newSlot);
  
-            // ✅ Count move ONLY if slot actually changed
+            //  Count move ONLY if slot actually changed
             if (dragStartSlot != newSlot)
             {
                 GameManager.Instance.RegisterMove();
@@ -121,7 +121,7 @@ public class NodeDrag : MonoBehaviour
         }
         else
         {
-            // 🔒 Invalid drop → revert to original slot
+            //  Invalid drop → revert to original slot
             AttachToSlot(dragStartSlot);
         }
  
@@ -194,7 +194,7 @@ public class NodeDrag : MonoBehaviour
             yield return null;
         }
  
-        Debug.LogError($"❌ Node {name} FAILED to find compatible slot!");
+        Debug.LogError($" Node {name} FAILED to find compatible slot!");
     }
  
     // ==================================================
@@ -266,7 +266,7 @@ public class NodeDrag : MonoBehaviour
             }
         }
  
-        Debug.LogError($"❌ Node {name} has NO rope reference!");
+        Debug.LogError($" Node {name} has NO rope reference!");
     }
  
     // ==================================================
