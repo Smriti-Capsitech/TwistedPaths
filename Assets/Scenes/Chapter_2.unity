@@ -1134,6 +1134,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5f39e10cfb0c63143ac12932bfb223c7, type: 2}
   - {fileID: 11400000, guid: ecbcd12ce735574499721836bfac9264, type: 2}
   - {fileID: 11400000, guid: 256f9a7d0c5cba14fa954d7700058634, type: 2}
+  - {fileID: 11400000, guid: 43f790c9e1f1fec438c66a18a0eb4ca2, type: 2}
+  - {fileID: 11400000, guid: 9bd8ce016f8029840a6e145dc41c5829, type: 2}
+  - {fileID: 11400000, guid: dc3c5784b6839a449b94ca1c55391b7d, type: 2}
+  - {fileID: 11400000, guid: 48c111a25de692742a537f7c9102e26d, type: 2}
+  - {fileID: 11400000, guid: 8547ec247cdd05f4cb669f557e71d3b9, type: 2}
   slotPrefab: {fileID: 8835970409664196696, guid: 36618a47e56c87440ba207495ca24427, type: 3}
   nodePrefab: {fileID: 6261621519563352903, guid: 4eaf91b036226514cad3f9af0d442705, type: 3}
   ropePrefab: {fileID: 6842435808837969183, guid: 5d740f561f4d1ee49963c26b6af82d0e, type: 3}
@@ -1303,7 +1308,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &705400609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1326,7 +1331,7 @@ Transform:
   m_GameObject: {fileID: 705400608}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -719.50165, y: -1479.489, z: -0.047112633}
+  m_LocalPosition: {x: -14, y: -28.000032, z: -0.047112633}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2169,6 +2174,8 @@ GameObject:
   - component: {fileID: 1199000357}
   - component: {fileID: 1199000356}
   - component: {fileID: 1199000355}
+  - component: {fileID: 1199000359}
+  - component: {fileID: 1199000358}
   m_Layer: 0
   m_Name: Rope_2
   m_TagString: Untagged
@@ -2192,10 +2199,6 @@ MonoBehaviour:
   nodeB: {fileID: 2027438260}
   isMovable: 1
   moveOrder: 0
-  normalColor: {r: 1, g: 1, b: 1, a: 1}
-  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  normalWidth: 0.15
-  highlightWidth: 0.25
   segments: 20
   sagAmount: 0.5
 --- !u!120 &1199000356
@@ -2320,6 +2323,70 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &1199000358
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1199000354}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1, y: 1}
+  m_Direction: 0
+--- !u!50 &1199000359
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1199000354}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1230055045
 GameObject:
   m_ObjectHideFlags: 0
@@ -2744,7 +2811,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1450274017
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3138,6 +3205,9 @@ MonoBehaviour:
   ropes: []
   maxMoves: 0
   currentMoves: 0
+  nodeBlockRadius: 0.25
+  winPanel: {fileID: 1450274016}
+  losePanel: {fileID: 1656869857}
   currentLevelData: {fileID: 0}
 --- !u!4 &1575354535
 Transform:
@@ -3973,7 +4043,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Moves Left :0
+  m_text: Moves :0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4068,7 +4138,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1, y: 781}
+  m_AnchoredPosition: {x: 25, y: 781}
   m_SizeDelta: {x: 1000, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1956978442
@@ -4720,6 +4790,8 @@ GameObject:
   - component: {fileID: 2118092959}
   - component: {fileID: 2118092958}
   - component: {fileID: 2118092957}
+  - component: {fileID: 2118092961}
+  - component: {fileID: 2118092960}
   m_Layer: 0
   m_Name: Rope_3
   m_TagString: Untagged
@@ -4743,10 +4815,6 @@ MonoBehaviour:
   nodeB: {fileID: 2030627523}
   isMovable: 1
   moveOrder: 0
-  normalColor: {r: 1, g: 1, b: 1, a: 1}
-  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  normalWidth: 0.15
-  highlightWidth: 0.25
   segments: 20
   sagAmount: 0.5
 --- !u!120 &2118092958
@@ -4871,6 +4939,70 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &2118092960
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118092956}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1, y: 1}
+  m_Direction: 0
+--- !u!50 &2118092961
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118092956}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &2125758977
 GameObject:
   m_ObjectHideFlags: 0

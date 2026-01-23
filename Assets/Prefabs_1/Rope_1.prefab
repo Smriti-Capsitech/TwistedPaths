@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -5189182505322384130}
   m_Layer: 0
   m_Name: Rope_1
-  m_TagString: Untagged
+  m_TagString: Rope
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -160,12 +160,15 @@ MonoBehaviour:
   nodeB: {fileID: 0}
   isMovable: 1
   moveOrder: 0
+  isTouchingNode: 0
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  blockedColor: {r: 1, g: 0, b: 0, a: 1}
   normalWidth: 0.25
   highlightWidth: 0.25
   segments: 20
   sagAmount: 0.5
+  nodeBlockRadius: 0.25
 --- !u!50 &7488403812322971619
 Rigidbody2D:
   serializedVersion: 5

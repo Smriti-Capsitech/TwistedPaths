@@ -32,6 +32,12 @@ public class NodeDrag : MonoBehaviour
  
     //  Cached slots (stable & safe)
     private static Slot[] cachedSlots;
+
+    public RopeController_1 GetOwningRope()
+{
+    return rope;
+}
+
  
     // ==================================================
     // UNITY LIFECYCLE
@@ -98,36 +104,36 @@ public class NodeDrag : MonoBehaviour
     }
  
     void OnMouseUp()
+{
+    if (!isDragging)
+        return;
+
+    isDragging = false;
+
+    if (GameManager.Instance == null)
+        return;
+
+    Slot newSlot = FindSnapSlot();
+
+    if (newSlot != null)
     {
-        if (!isDragging)
-            return;
- 
-        isDragging = false;
- 
-        if (GameManager.Instance == null)
-            return;
- 
-        Slot newSlot = FindSnapSlot();
- 
-        if (newSlot != null)
+        AttachToSlot(newSlot);
+
+        // Count move ONLY if slot actually changed
+        if (dragStartSlot != newSlot)
         {
-            AttachToSlot(newSlot);
- 
-            //  Count move ONLY if slot actually changed
-            if (dragStartSlot != newSlot)
-            {
-                GameManager.Instance.RegisterMove();
-            }
+            GameManager.Instance.RegisterMove();
         }
-        else
-        {
-            //  Invalid drop → revert to original slot
-            AttachToSlot(dragStartSlot);
-        }
- 
-        GameManager.Instance.UpdateTopOrderMovability();
-        GameManager.Instance.CheckLevelComplete();
     }
+    else
+    {
+        // Invalid drop → revert to original slot
+        AttachToSlot(dragStartSlot);
+    }
+
+    GameManager.Instance.UpdateTopOrderMovability();
+}
+
  
  
     // ==================================================
@@ -285,3 +291,7 @@ public class NodeDrag : MonoBehaviour
     }
 #endif
 }
+
+
+
+
