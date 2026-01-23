@@ -25,6 +25,8 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
+        if (AdManager.Instance != null)
+        AdManager.Instance.ShowBanner();
         // ✅ DO NOT FORCE LEVEL 1 EVERY TIME
         currentLevelIndex = PlayerPrefs.GetInt("CURRENT_LEVEL", 0);
         LoadLevel(currentLevelIndex);

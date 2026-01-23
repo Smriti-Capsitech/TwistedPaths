@@ -94,6 +94,9 @@ public class GameOverUI_1 : MonoBehaviour
     {
         panel.SetActive(true);
         Time.timeScale = 0f;
+        if (AdManager.Instance != null)
+        AdManager.Instance.OnGameOver();
+
     }
 
     public void Hide()

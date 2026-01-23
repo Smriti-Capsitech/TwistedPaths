@@ -1,45 +1,4 @@
 
-
-// using UnityEngine;
-// using UnityEngine.SceneManagement;
-
-// public class LevelCompleteButtons : MonoBehaviour
-// {
-
-
-// public void NextLevel()
-// {
-//     int currentLevel = PlayerPrefs.GetInt("CURRENT_LEVEL", 0);
-
-//     // ONLY move to next level
-//     PlayerPrefs.SetInt("CURRENT_LEVEL", currentLevel + 1);
-//     PlayerPrefs.Save();
-
-//     SceneManager.LoadScene("SampleScene");
-// }
-
-    
-
-//     // 🏠 MAIN MENU BUTTON
-//     public void MainMenu()
-//     {
-//         SceneManager.LoadScene("ChapterSelectScene");
-//     }
-//     public void OnBackToHome()
-//     {
-//         // ✅ Always restore time
-//         Time.timeScale = 1f;
-
-//         // ✅ Destroy ONLY Chapter 2 LevelManager
-//         if (LevelManager_1.Instance != null)
-//         {
-//             Destroy(LevelManager_1.Instance.gameObject);
-//         }
-
-//         // ✅ Load chapter select
-//         SceneManager.LoadScene("ChapterSelectScene");
-//     }
-// }
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -49,8 +8,8 @@ public class LevelCompleteButtons : MonoBehaviour
     {
         int currentLevel = PlayerPrefs.GetInt("CURRENT_LEVEL", 0);
 
-        // ✅ Chapter 1 ends at Level 15 (index 14)
-        if (currentLevel >= 16)
+        // ✅ Chapter 1 ends at Level 20 (index 19)
+        if (currentLevel >= 19)
         {
             SceneManager.LoadScene("ChapterSelectScene");
             return;
@@ -80,7 +39,6 @@ public class LevelCompleteButtons : MonoBehaviour
             Destroy(LevelManager_1.Instance.gameObject);
         }
 
-        // ✅ Load chapter select
         SceneManager.LoadScene("ChapterSelectScene");
     }
 }

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01d223c2f257e3a4b9a091ddf38edff1, type: 3}
   m_Name: Level_17
   m_EditorClassIdentifier: 
-  targetPattern: 02000000040000000d000000060000000f000000080000000a000000
-  initialRope: 020000000a000000
+  targetPattern: 0d000000020000000c0000000e0000000f0000000d000000
+  initialRope: 0d0000000f0000000e0000000d000000
   showPreview: 1
   timeLimit: 30
   hasHint: 1
