@@ -33,10 +33,13 @@ public class LevelCompleteChecker : MonoBehaviour
 
         completed = true;
 
+
         // ✅ SAVE PROGRESS HERE
         SaveLevelProgress();
 
         StartCoroutine(LoadLevelCompleteAfterDelay());
+        AdManager.Instance.OnLevelComplete();
+
     }
 
     // =========================
@@ -67,6 +70,8 @@ public class LevelCompleteChecker : MonoBehaviour
     {
         if (timer != null)
             timer.StopTimer();
+        if (AdManager.Instance != null)
+        AdManager.Instance.HideBanner();
 
         yield return new WaitForSeconds(0.6f);
         SceneManager.LoadScene("LevelCompleteScene");
@@ -135,4 +140,5 @@ public class LevelCompleteChecker : MonoBehaviour
             return (a * 397) ^ b;
         }
     }
+    
 }

@@ -1,177 +1,174 @@
 ﻿
 
 
-//using UnityEngine;
 
-//public class LevelManager_1 : MonoBehaviour
-//{
-//    public static LevelManager_1 Instance;
+// using UnityEngine;
 
-//    [Header("Levels")]
-//    public LevelData_1[] levels;
+// public class LevelManager_1 : MonoBehaviour
+// {
+//     public static LevelManager_1 Instance;
 
-//    [Header("Prefabs")]
-//    public GameObject slotPrefab;
-//    public GameObject nodePrefab;
-//    public GameObject ropePrefab;
+//     [Header("Levels")]
+//     public LevelData_1[] levels;
 
-//    private GameObject levelParent;
-//    private int currentLevelIndex = 0;
+//     [Header("Prefabs")]
+//     public GameObject slotPrefab;
+//     public GameObject nodePrefab;
+//     public GameObject ropePrefab;
 
-//    void Awake()
-//    {
-//        if (Instance != null)
-//        {
-//            Destroy(gameObject);
-//            return;
-//        }
-//        Instance = this;
-//    }
+//     private GameObject levelParent;
+//     private int currentLevelIndex = 0;
 
-//    void Start()
-//    {
-//        LoadLevel(currentLevelIndex);
-//    }
+//     // ==================================================
+//     // UNITY LIFECYCLE
+//     // ==================================================
+//     void Awake()
+//     {
+//         if (Instance != null)
+//         {
+//             Destroy(gameObject);
+//             return;
+//         }
+//         Instance = this;
+//     }
 
-//    public void LoadLevel(int index)
-//    {
-//        Time.timeScale = 1f;
+//     void Start()
+//     {
+//         if (AdManager.Instance != null)
+//         AdManager.Instance.ShowBanner();
+//         currentLevelIndex = PlayerPrefs.GetInt("CURRENT_LEVEL", 0);
+//         LoadLevel(currentLevelIndex);
+//     }
 
-//        if (LevelCompleteUI_1.Instance != null)
-//            LevelCompleteUI_1.Instance.Hide();
+//     // ==================================================
+//     // LOAD LEVEL
+//     // ==================================================
+//     public void LoadLevel(int index)
+//     {
+//         Time.timeScale = 1f;
 
-//        // -----------------------------
-//        // CLEAR & RESET
-//        // -----------------------------
-//        ClearLevel();
-//        GameManager.Instance.ResetState();
+//         if (LevelCompleteUI_1.Instance != null)
+//             LevelCompleteUI_1.Instance.Hide();
 
-//        levelParent = new GameObject("Level");
+//         // -----------------------------
+//         // CLEAR PREVIOUS LEVEL
+//         // -----------------------------
+//         ClearLevel();
+//         GameManager.Instance.ResetState();
 
-//        LevelData_1 data = levels[index];
+//         levelParent = new GameObject("Level");
 
-//        // 🔥 IMPORTANT: SET MOVE LIMIT HERE
-//        GameManager.Instance.SetMoveLimit(data.maxMoves);
+//         LevelData_1 data = levels[index];
 
-//        // ==================================================
-//        // CREATE PART A SLOTS
-//        // ==================================================
-//        foreach (var pos in data.partASlotPositions)
-//        {
-//            GameObject slotObj =
-//                Instantiate(slotPrefab, pos, Quaternion.identity, levelParent.transform);
+//         // 🔥 REQUIRED FOR MOVEMENT RULES
+//         GameManager.Instance.currentLevelData = data;
 
-//            Slot slot = slotObj.GetComponent<Slot>();
-//            if (slot != null)
-//                slot.slotType = SlotType.PartA;
-//        }
+//         // 🔥 SET MOVE LIMIT
+//         GameManager.Instance.SetMoveLimit(data.maxMoves);
 
-//        // ==================================================
-//        // CREATE PART B SLOTS
-//        // ==================================================
-//        foreach (var pos in data.partBSlotPositions)
-//        {
-//            GameObject slotObj =
-//                Instantiate(slotPrefab, pos, Quaternion.identity, levelParent.transform);
+//         // ==================================================
+//         // CREATE PART A SLOTS
+//         // ==================================================
+//         foreach (var pos in data.partASlotPositions)
+//         {
+//             GameObject slotObj =
+//                 Instantiate(slotPrefab, pos, Quaternion.identity, levelParent.transform);
 
-//            Slot slot = slotObj.GetComponent<Slot>();
-//            if (slot != null)
-//                slot.slotType = SlotType.PartB;
-//        }
+//             Slot slot = slotObj.GetComponent<Slot>();
+//             if (slot != null)
+//                 slot.slotType = SlotType.PartA;
+//         }
 
-//        // ==================================================
-//        // CREATE ROPES + NODES
-//        // ==================================================
-//        foreach (var rope in data.ropes)
-//        {
-//            // ---------------------------
-//            // Node A
-//            // ---------------------------
-//            GameObject a =
-//                Instantiate(nodePrefab, rope.nodeAPosition, Quaternion.identity, levelParent.transform);
+//         // ==================================================
+//         // CREATE PART B SLOTS
+//         // ==================================================
+//         foreach (var pos in data.partBSlotPositions)
+//         {
+//             GameObject slotObj =
+//                 Instantiate(slotPrefab, pos, Quaternion.identity, levelParent.transform);
 
-//            NodeDrag nodeA = a.GetComponent<NodeDrag>();
-//            if (nodeA != null)
-//                nodeA.nodeType = NodeType.PartA;
+//             Slot slot = slotObj.GetComponent<Slot>();
+//             if (slot != null)
+//                 slot.slotType = SlotType.PartB;
+//         }
 
-//            // ---------------------------
-//            // Node B
-//            // ---------------------------
-//            GameObject b =
-//                Instantiate(nodePrefab, rope.nodeBPosition, Quaternion.identity, levelParent.transform);
+//         // ==================================================
+//         // CREATE ROPES + NODES
+//         // ==================================================
+//         foreach (var rope in data.ropes)
+//         {
+//             // NODE A
+//             GameObject nodeAObj =
+//                 Instantiate(nodePrefab, rope.nodeAPosition, Quaternion.identity, levelParent.transform);
 
-//            NodeDrag nodeB = b.GetComponent<NodeDrag>();
-//            if (nodeB != null)
-//                nodeB.nodeType = NodeType.PartB;
+//             NodeDrag nodeA = nodeAObj.GetComponent<NodeDrag>();
+//             if (nodeA != null)
+//                 nodeA.nodeType = NodeType.PartA;
 
-//            // ---------------------------
-//            // Rope
-//            // ---------------------------
-//            GameObject ropeObj =
-//                Instantiate(ropePrefab, Vector3.zero, Quaternion.identity, levelParent.transform);
+//             // NODE B
+//             GameObject nodeBObj =
+//                 Instantiate(nodePrefab, rope.nodeBPosition, Quaternion.identity, levelParent.transform);
 
-//            RopeController_1 rc = ropeObj.GetComponent<RopeController_1>();
-//            if (rc == null) continue;
+//             NodeDrag nodeB = nodeBObj.GetComponent<NodeDrag>();
+//             if (nodeB != null)
+//                 nodeB.nodeType = NodeType.PartB;
 
-//            rc.nodeA = a.transform;
-//            rc.nodeB = b.transform;
+//             // ROPE
+//             GameObject ropeObj =
+//                 Instantiate(ropePrefab, Vector3.zero, Quaternion.identity, levelParent.transform);
 
-//            // ---------------------------
-//            // APPLY MATERIAL + COLOR
-//            // ---------------------------
-//            LineRenderer lr = rc.GetComponent<LineRenderer>();
-//            if (lr != null && rope.ropeMaterial != null)
-//            {
-//                lr.material = rope.ropeMaterial;
-//                lr.startColor = rope.ropeColor;
-//                lr.endColor = rope.ropeColor;
-//            }
-//        }
+//             RopeController_1 rc = ropeObj.GetComponent<RopeController_1>();
+//             if (rc == null) continue;
 
-//        // ==================================================
-//        // REGISTER ROPES
-//        // ==================================================
-//        GameManager.Instance.RegisterRopes(
-//            levelParent.GetComponentsInChildren<RopeController_1>()
-//        );
+//             rc.nodeA = nodeAObj.transform;
+//             rc.nodeB = nodeBObj.transform;
+//         }
 
-//        if (GameManager.Instance.monsterSpawner != null)
-//        {
-//            GameManager.Instance.monsterSpawner.CreateMonstersForRopes(
-//                GameManager.Instance.ropes
-//            );
+//         // ==================================================
+//         // REGISTER ROPES
+//         // ==================================================
+//         GameManager.Instance.RegisterRopes(
+//             levelParent.GetComponentsInChildren<RopeController_1>()
+//         );
 
-//            GameManager.Instance.UpdateRopeMonsters();
-//        }
+//         // 🔥 MUST BE CALLED AFTER REGISTER
+//         GameManager.Instance.UpdateTopOrderMovability();
 
-//    }
+//         if (LevelUI.Instance != null)
+//             LevelUI.Instance.SetLevel(currentLevelIndex + 1);
+//     }
 
-//    public void RestartLevel()
-//    {
-//        LoadLevel(currentLevelIndex);
-//    }
-
-//    public void NextLevel()
-//    {
-//        currentLevelIndex++;
-//        if (currentLevelIndex >= levels.Length) return;
-//        LoadLevel(currentLevelIndex);
-//    }
-
-//    void ClearLevel()
-//    {
-//        if (levelParent != null)
-//            Destroy(levelParent);
-//    }
-
-//    public bool IsLastLevel()
-//    {
-//        return currentLevelIndex >= levels.Length - 1;
-//    }
-//}
+//     // ==================================================
+//     // LEVEL CONTROL
+//     // ==================================================
+//     public void RestartLevel()
+//     {
+//         LoadLevel(currentLevelIndex);
 
 
+//     }
 
+//     public void NextLevel()
+//     {
+//         currentLevelIndex++;
+//         if (currentLevelIndex >= levels.Length) return;
+//         LoadLevel(currentLevelIndex);
+//     }
+
+//     public bool IsLastLevel()
+//     {
+//         return currentLevelIndex >= levels.Length - 1;
+//     }
+
+//     // ==================================================
+//     // CLEANUP
+//     // ==================================================
+//     void ClearLevel()
+//     {
+//         if (levelParent != null)
+//             Destroy(levelParent);
+//     }
+// }
 using UnityEngine;
 
 public class LevelManager_1 : MonoBehaviour
@@ -204,6 +201,9 @@ public class LevelManager_1 : MonoBehaviour
 
     void Start()
     {
+        if (AdManager.Instance != null)
+            AdManager.Instance.ShowBanner();   // OK
+
         currentLevelIndex = PlayerPrefs.GetInt("CURRENT_LEVEL", 0);
         LoadLevel(currentLevelIndex);
     }
@@ -214,6 +214,10 @@ public class LevelManager_1 : MonoBehaviour
     public void LoadLevel(int index)
     {
         Time.timeScale = 1f;
+
+        // ✅ FIX: ENSURE BANNER RETURNS FOR EVERY LEVEL
+        if (AdManager.Instance != null)
+            AdManager.Instance.ShowBanner();
 
         if (LevelCompleteUI_1.Instance != null)
             LevelCompleteUI_1.Instance.Hide();
@@ -228,10 +232,7 @@ public class LevelManager_1 : MonoBehaviour
 
         LevelData_1 data = levels[index];
 
-        // 🔥 REQUIRED FOR MOVEMENT RULES
         GameManager.Instance.currentLevelData = data;
-
-        // 🔥 SET MOVE LIMIT
         GameManager.Instance.SetMoveLimit(data.maxMoves);
 
         // ==================================================
@@ -265,7 +266,6 @@ public class LevelManager_1 : MonoBehaviour
         // ==================================================
         foreach (var rope in data.ropes)
         {
-            // NODE A
             GameObject nodeAObj =
                 Instantiate(nodePrefab, rope.nodeAPosition, Quaternion.identity, levelParent.transform);
 
@@ -273,7 +273,6 @@ public class LevelManager_1 : MonoBehaviour
             if (nodeA != null)
                 nodeA.nodeType = NodeType.PartA;
 
-            // NODE B
             GameObject nodeBObj =
                 Instantiate(nodePrefab, rope.nodeBPosition, Quaternion.identity, levelParent.transform);
 
@@ -281,7 +280,6 @@ public class LevelManager_1 : MonoBehaviour
             if (nodeB != null)
                 nodeB.nodeType = NodeType.PartB;
 
-            // ROPE
             GameObject ropeObj =
                 Instantiate(ropePrefab, Vector3.zero, Quaternion.identity, levelParent.transform);
 
@@ -292,28 +290,19 @@ public class LevelManager_1 : MonoBehaviour
             rc.nodeB = nodeBObj.transform;
         }
 
-        // ==================================================
-        // REGISTER ROPES
-        // ==================================================
         GameManager.Instance.RegisterRopes(
             levelParent.GetComponentsInChildren<RopeController_1>()
         );
 
-        // 🔥 MUST BE CALLED AFTER REGISTER
         GameManager.Instance.UpdateTopOrderMovability();
 
         if (LevelUI.Instance != null)
             LevelUI.Instance.SetLevel(currentLevelIndex + 1);
     }
 
-    // ==================================================
-    // LEVEL CONTROL
-    // ==================================================
     public void RestartLevel()
     {
         LoadLevel(currentLevelIndex);
-
-
     }
 
     public void NextLevel()
@@ -328,9 +317,6 @@ public class LevelManager_1 : MonoBehaviour
         return currentLevelIndex >= levels.Length - 1;
     }
 
-    // ==================================================
-    // CLEANUP
-    // ==================================================
     void ClearLevel()
     {
         if (levelParent != null)

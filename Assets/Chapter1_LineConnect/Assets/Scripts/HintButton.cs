@@ -1,13 +1,13 @@
 
-
 // using UnityEngine;
 // using System.Collections;
-
+// using UnityEngine.SceneManagement;
 // public class HintButton : MonoBehaviour
 // {
 //     [Header("References")]
 //     public LevelManager levelManager;
 //     public CircularDotGenerator outerDots;
+//     public InnerGridGenerator innerGrid; // 🔥 ADD THIS
 
 //     [Header("Visual")]
 //     public Color hintColor = Color.cyan;
@@ -25,13 +25,16 @@
 //         if (levelManager == null || outerDots == null) return;
 
 //         LevelData level = levelManager.GetCurrentLevel();
-//         if (level.hintDots == null || level.hintDots.Length == 0)
+//         if (level == null || level.hintDots == null || level.hintDots.Length == 0)
 //             return;
 
 //         StartCoroutine(FlashDots(level.hintDots));
 //         hintUsed = true;
 //     }
 
+//     // =========================
+//     // 🔦 FLASH OUTER + INNER DOTS
+//     // =========================
 //     IEnumerator FlashDots(int[] indices)
 //     {
 //         isShowing = true;
@@ -42,10 +45,21 @@
 //         for (int i = 0; i < indices.Length; i++)
 //         {
 //             int idx = indices[i];
-//             if (idx < 0 || idx >= outerDots.dots.Count)
-//                 continue;
+//             SpriteRenderer sr = null;
 
-//             SpriteRenderer sr = outerDots.dots[idx].GetComponent<SpriteRenderer>();
+//             // -------- OUTER DOTS (0–11)
+//             if (idx >= 0 && idx < outerDots.dots.Count)
+//             {
+//                 sr = outerDots.dots[idx].GetComponent<SpriteRenderer>();
+//             }
+//             // -------- INNER DOTS (12–15)
+//             else if (idx >= 12 && innerGrid != null)
+//             {
+//                 InnerSnapNode node = innerGrid.nodes.Find(n => n.index == idx);
+//                 if (node != null)
+//                     sr = node.GetComponent<SpriteRenderer>();
+//             }
+
 //             if (sr == null) continue;
 
 //             renderers[i] = sr;
@@ -89,10 +103,28 @@
 //         ResetHints();
 //         levelManager.ReplayCurrentLevel();
 //     }
+//     // 🔙 BACK TO CHAPTER SELECT (SAFE)
+//     public void OnBackToHome()
+//     {
+//         // ✅ Always restore time
+//         Time.timeScale = 1f;
+
+//         // ✅ Destroy ONLY Chapter 2 LevelManager
+//         if (LevelManager_1.Instance != null)
+//         {
+//             Destroy(LevelManager_1.Instance.gameObject);
+//         }
+
+//         // ✅ Load chapter select
+//         SceneManager.LoadScene("ChapterSelectScene");
+//     }
 // }
+
+
 using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+
 public class HintButton : MonoBehaviour
 {
     [Header("References")]
@@ -189,26 +221,32 @@ public class HintButton : MonoBehaviour
             return;
         }
 
-        Debug.Log("🔁 Replay current level");
-
         ResetHints();
-        levelManager.ReplayCurrentLevel();
+
+        // 🔥 ADD THIS ONLY (Rewarded Ad every 2 replays)
+        if (AdManager.Instance != null)
+        {
+            AdManager.Instance.OnReplay(() =>
+            {
+                levelManager.ReplayCurrentLevel();
+            });
+        }
+        else
+        {
+            levelManager.ReplayCurrentLevel();
+        }
     }
+
     // 🔙 BACK TO CHAPTER SELECT (SAFE)
     public void OnBackToHome()
     {
-        // ✅ Always restore time
         Time.timeScale = 1f;
 
-        // ✅ Destroy ONLY Chapter 2 LevelManager
         if (LevelManager_1.Instance != null)
         {
             Destroy(LevelManager_1.Instance.gameObject);
         }
 
-        // ✅ Load chapter select
         SceneManager.LoadScene("ChapterSelectScene");
     }
 }
-
-
