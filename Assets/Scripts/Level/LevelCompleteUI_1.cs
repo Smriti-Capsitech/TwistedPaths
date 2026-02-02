@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 using UnityEngine;
+=======
+﻿using UnityEngine;
+>>>>>>> Stashed changes
 using UnityEngine.SceneManagement;
 
 public class LevelCompleteUI_1 : MonoBehaviour
@@ -25,6 +29,7 @@ public class LevelCompleteUI_1 : MonoBehaviour
     public void Show()
     {
         panel.SetActive(true);
+<<<<<<< Updated upstream
 
         // Hide banner ad
         if (AdManager.Instance != null)
@@ -47,6 +52,9 @@ public class LevelCompleteUI_1 : MonoBehaviour
         // Notify ad manager after completion
         if (AdManager.Instance != null)
             AdManager.Instance.OnLevelComplete();
+=======
+        Time.timeScale = 0f;
+>>>>>>> Stashed changes
     }
 
     // =========================
@@ -56,6 +64,7 @@ public class LevelCompleteUI_1 : MonoBehaviour
     {
         Hide();
 
+<<<<<<< Updated upstream
         int chapter = 2;   // Chapter 2 only
         int currentLevel = PlayerPrefs.GetInt("CURRENT_LEVEL", 0);
 
@@ -68,6 +77,12 @@ public class LevelCompleteUI_1 : MonoBehaviour
             PlayerPrefs.SetInt($"CH{chapter}_UNLOCKED_LEVEL", currentLevel + 1);
 
         PlayerPrefs.Save();
+=======
+        int currentLevel =
+            PlayerPrefs.GetInt("CURRENT_LEVEL", 0);
+
+        PlayerPrefs.SetInt("CURRENT_LEVEL", currentLevel + 1);
+>>>>>>> Stashed changes
 
         // Last level → Chapter Select
         if (LevelManager_1.Instance.IsLastLevel())
@@ -76,8 +91,11 @@ public class LevelCompleteUI_1 : MonoBehaviour
             return;
         }
 
+<<<<<<< Updated upstream
         // Move to next level
         PlayerPrefs.SetInt("CURRENT_LEVEL", currentLevel + 1);
+=======
+>>>>>>> Stashed changes
         LevelManager_1.Instance.NextLevel();
     }
 

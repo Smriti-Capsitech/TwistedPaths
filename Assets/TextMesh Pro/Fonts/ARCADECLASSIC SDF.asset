@@ -1,7 +1,10 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
 --- !u!28 &-5505700512302238694
 Texture2D:
   m_ObjectHideFlags: 0
@@ -48,6 +51,9 @@ Texture2D:
     offset: 0
     size: 0
     path: 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 --- !u!114 &11400000
 MonoBehaviour:
@@ -85,17 +91,23 @@ MonoBehaviour:
     m_StrikethroughThickness: 1.8000001
     m_TabWidth: 12
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   m_Material: {fileID: 561457211562889108}
   m_SourceFontFileGUID: 2cfbe14c0f6602e4180d38a474f96a80
   m_CreationSettings:
     sourceFontFileName: 
     sourceFontFileGUID: 2cfbe14c0f6602e4180d38a474f96a80
 =======
+=======
+>>>>>>> Stashed changes
   m_Material: {fileID: 6775373692296290537}
   m_SourceFontFileGUID: 4f179a8cace43ef4198bc669a5f5d520
   m_CreationSettings:
     sourceFontFileName: 
     sourceFontFileGUID: 4f179a8cace43ef4198bc669a5f5d520
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     faceIndex: 0
     pointSizeSamplingMode: 0
@@ -113,6 +125,7 @@ MonoBehaviour:
     fontStyleModifier: 0
     renderMode: 4165
     includeFontFeatures: 0
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
   m_SourceFontFile: {fileID: 12800000, guid: 2cfbe14c0f6602e4180d38a474f96a80, type: 3}
   m_SourceFontFilePath: 
@@ -769,6 +782,8 @@ MonoBehaviour:
   m_AtlasTextures:
   - {fileID: 4886430778420990145}
 =======
+=======
+>>>>>>> Stashed changes
   m_SourceFontFile: {fileID: 12800000, guid: 4f179a8cace43ef4198bc669a5f5d520, type: 3}
   m_SourceFontFilePath: 
   m_AtlasPopulationMode: 1
@@ -777,6 +792,9 @@ MonoBehaviour:
   m_CharacterTable: []
   m_AtlasTextures:
   - {fileID: -5505700512302238694}
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
   m_AtlasTextureIndex: 0
   m_IsMultiAtlasTexturesEnabled: 0
@@ -786,6 +804,7 @@ MonoBehaviour:
   m_AtlasHeight: 1024
   m_AtlasPadding: 9
   m_AtlasRenderMode: 4165
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
   m_UsedGlyphRects:
   - m_X: 0
@@ -961,11 +980,16 @@ MonoBehaviour:
     m_Y: 0
     m_Width: 708
 =======
+=======
+>>>>>>> Stashed changes
   m_UsedGlyphRects: []
   m_FreeGlyphRects:
   - m_X: 0
     m_Y: 0
     m_Width: 1023
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     m_Height: 1023
   m_FontFeatureTable:
@@ -1032,7 +1056,11 @@ MonoBehaviour:
   fallbackFontAssets: []
   atlas: {fileID: 0}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 --- !u!21 &561457211562889108
+=======
+--- !u!21 &6775373692296290537
+>>>>>>> Stashed changes
 =======
 --- !u!21 &6775373692296290537
 >>>>>>> Stashed changes
@@ -1072,7 +1100,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MainTex:
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         m_Texture: {fileID: 4886430778420990145}
+=======
+        m_Texture: {fileID: -5505700512302238694}
+>>>>>>> Stashed changes
 =======
         m_Texture: {fileID: -5505700512302238694}
 >>>>>>> Stashed changes
@@ -1149,6 +1181,7 @@ Material:
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 --- !u!28 &4886430778420990145
 Texture2D:
   m_ObjectHideFlags: 0
@@ -1195,5 +1228,7 @@ Texture2D:
     offset: 0
     size: 0
     path: 
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
