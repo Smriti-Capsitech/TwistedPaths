@@ -16,45 +16,46 @@ MonoBehaviour:
   maxMoves: 15
   movementRule: 2
   partASlotPositions:
-  - {x: -1.5, y: 2}
+  - {x: -1.5, y: 2.5}
+  - {x: -1.5, y: 1.5}
   - {x: -1.5, y: 0.5}
-  - {x: -1.5, y: -1}
-  - {x: -1.5, y: -2}
-  - {x: -0.5, y: -2}
-  - {x: -0.5, y: 2}
+  - {x: -1.5, y: -0.5}
+  - {x: -0.5, y: 2.5}
+  - {x: -0.5, y: 1.5}
   - {x: -0.5, y: 0.5}
-  - {x: -0.5, y: -1}
+  - {x: -0.5, y: -0.5}
   partBSlotPositions:
-  - {x: 1.5, y: 2}
+  - {x: 1.5, y: 2.5}
+  - {x: 1.5, y: 1.5}
   - {x: 1.5, y: 0.5}
-  - {x: 1.5, y: -1}
-  - {x: 1.5, y: -2}
-  - {x: 0.5, y: -2}
-  - {x: 0.5, y: 2}
+  - {x: 1.5, y: -0.5}
+  - {x: 0.5, y: 2.5}
+  - {x: 0.5, y: 1.5}
   - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: -0.5}
   ropes:
-  - ropeColor: {r: 0.66611534, g: 1, b: 0.042452812, a: 0.9843137}
-    nodeAPosition: {x: -1.3, y: 0}
-    nodeBPosition: {x: 1.3, y: 1}
-    ropeMaterial: {fileID: 2100000, guid: b3fbf1af7e7516e428d1e3d3959e5571, type: 2}
+  - ropeID: 0
+    ropePrefab: {fileID: 6842435808837969183, guid: 5d740f561f4d1ee49963c26b6af82d0e, type: 3}
+    nodeAPosition: {x: -1.3, y: 1.5}
+    nodeBPosition: {x: 1.3, y: 2.5}
     isMovable: 1
-  - ropeColor: {r: 0.0045834924, g: 0.6730059, b: 0.9716981, a: 0.9843137}
-    nodeAPosition: {x: -1.3, y: 1}
-    nodeBPosition: {x: 1.3, y: -1}
-    ropeMaterial: {fileID: 2100000, guid: b3fbf1af7e7516e428d1e3d3959e5571, type: 2}
+  - ropeID: 0
+    ropePrefab: {fileID: 6842435808837969183, guid: 5cee861854eb99346a9e74eaca15d3f1, type: 3}
+    nodeAPosition: {x: -1.3, y: 2.5}
+    nodeBPosition: {x: 1.3, y: 0.5}
     isMovable: 1
-  - ropeColor: {r: 0.0045834924, g: 0.6730059, b: 0.9716981, a: 0.9843137}
-    nodeAPosition: {x: -1.3, y: -2}
-    nodeBPosition: {x: 1.3, y: 0}
-    ropeMaterial: {fileID: 2100000, guid: b3fbf1af7e7516e428d1e3d3959e5571, type: 2}
+  - ropeID: 0
+    ropePrefab: {fileID: 6842435808837969183, guid: 2143dd7d25f879147a9083f6ce452866, type: 3}
+    nodeAPosition: {x: -1.3, y: -0.5}
+    nodeBPosition: {x: 1.3, y: 1.5}
     isMovable: 1
-  - ropeColor: {r: 0.0045834924, g: 0.6730059, b: 0.9716981, a: 0.9843137}
-    nodeAPosition: {x: -1.3, y: -1}
-    nodeBPosition: {x: 1.3, y: -2}
-    ropeMaterial: {fileID: 2100000, guid: b3fbf1af7e7516e428d1e3d3959e5571, type: 2}
+  - ropeID: 0
+    ropePrefab: {fileID: 6842435808837969183, guid: 870e7c8afdd4b6242b425d941fe9239b, type: 3}
+    nodeAPosition: {x: -1.3, y: 0.5}
+    nodeBPosition: {x: 1.3, y: -0.5}
     isMovable: 1
-  - ropeColor: {r: 0.0045834924, g: 0.6730059, b: 0.9716981, a: 0.9843137}
-    nodeAPosition: {x: -0.5, y: 1}
-    nodeBPosition: {x: 0.5, y: 1}
-    ropeMaterial: {fileID: 2100000, guid: b3fbf1af7e7516e428d1e3d3959e5571, type: 2}
+  - ropeID: 0
+    ropePrefab: {fileID: 6842435808837969183, guid: 7c94a35589605fa49a1259216a6286a0, type: 3}
+    nodeAPosition: {x: -0.5, y: 2.5}
+    nodeBPosition: {x: 0.5, y: 2.5}
     isMovable: 1
