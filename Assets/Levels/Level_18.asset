@@ -16,59 +16,59 @@ MonoBehaviour:
   maxMoves: 15
   movementRule: 2
   partASlotPositions:
-  - {x: -1.5, y: 2.5}
-  - {x: -1.5, y: 1.5}
-  - {x: -1.5, y: 0.5}
-  - {x: -1.5, y: -0.5}
-  - {x: -1.5, y: -1.5}
-  - {x: -1.5, y: -2.5}
-  - {x: -0.5, y: 2.5}
-  - {x: -0.5, y: 1.5}
-  - {x: -0.5, y: 0.5}
-  - {x: -0.5, y: -0.5}
-  - {x: -0.5, y: -1.5}
-  - {x: -0.5, y: -2.5}
+  - {x: -1.5, y: 3.5}
+  - {x: -1.5, y: 2.8}
+  - {x: -1.5, y: 2}
+  - {x: -1.5, y: 1.2}
+  - {x: -1.5, y: 0.4}
+  - {x: -1.5, y: -0.2}
+  - {x: -0.5, y: 3.5}
+  - {x: -0.5, y: 2.8}
+  - {x: -0.5, y: 2}
+  - {x: -0.5, y: 1.2}
+  - {x: -0.5, y: 0.4}
+  - {x: -0.5, y: -0.2}
   partBSlotPositions:
-  - {x: 1.5, y: 2.5}
-  - {x: 1.5, y: 1.5}
-  - {x: 1.5, y: 0.5}
-  - {x: 1.5, y: -0.5}
-  - {x: 1.5, y: -1.5}
-  - {x: 1.5, y: -2.5}
-  - {x: 0.5, y: 2.5}
-  - {x: 0.5, y: 1.5}
-  - {x: 0.5, y: 0.5}
-  - {x: 0.5, y: -0.5}
-  - {x: 0.5, y: -1.5}
-  - {x: 0.5, y: -2.5}
+  - {x: 1.5, y: 3.5}
+  - {x: 1.5, y: 2.8}
+  - {x: 1.5, y: 2}
+  - {x: 1.5, y: 1.2}
+  - {x: 1.5, y: 0.4}
+  - {x: 1.5, y: -0.2}
+  - {x: 0.5, y: 3.5}
+  - {x: 0.5, y: 2.8}
+  - {x: 0.5, y: 2}
+  - {x: 0.5, y: 1.2}
+  - {x: 0.5, y: 0.4}
+  - {x: 0.5, y: -0.2}
   ropes:
-  - ropeColor: {r: 0, g: 0, b: 0, a: 0}
-    nodeAPosition: {x: -1.5, y: -1.5}
-    nodeBPosition: {x: 0.5, y: 0.5}
-    ropeMaterial: {fileID: 0}
+  - ropeID: 0
+    ropePrefab: {fileID: 0}
+    nodeAPosition: {x: -1.5, y: 0.4}
+    nodeBPosition: {x: 0.5, y: 2}
     isMovable: 0
-  - ropeColor: {r: 0, g: 0, b: 0, a: 0}
-    nodeAPosition: {x: -1.5, y: 1.5}
-    nodeBPosition: {x: 0.5, y: -0.5}
-    ropeMaterial: {fileID: 0}
+  - ropeID: 0
+    ropePrefab: {fileID: 0}
+    nodeAPosition: {x: -1.5, y: 2.8}
+    nodeBPosition: {x: 0.5, y: 1.2}
     isMovable: 0
-  - ropeColor: {r: 0, g: 0, b: 0, a: 0}
-    nodeAPosition: {x: -1.5, y: 0.5}
-    nodeBPosition: {x: 0.5, y: 2.5}
-    ropeMaterial: {fileID: 0}
+  - ropeID: 0
+    ropePrefab: {fileID: 0}
+    nodeAPosition: {x: -1.5, y: 2}
+    nodeBPosition: {x: 0.5, y: 3.5}
     isMovable: 0
-  - ropeColor: {r: 0, g: 0, b: 0, a: 0}
-    nodeAPosition: {x: -0.5, y: 2.5}
-    nodeBPosition: {x: 1.5, y: 0.5}
-    ropeMaterial: {fileID: 0}
+  - ropeID: 0
+    ropePrefab: {fileID: 0}
+    nodeAPosition: {x: -0.5, y: 3.5}
+    nodeBPosition: {x: 1.5, y: 2}
     isMovable: 0
-  - ropeColor: {r: 0, g: 0, b: 0, a: 0}
-    nodeAPosition: {x: -1.5, y: -0.5}
-    nodeBPosition: {x: 0.5, y: -2.5}
-    ropeMaterial: {fileID: 0}
+  - ropeID: 0
+    ropePrefab: {fileID: 0}
+    nodeAPosition: {x: -1.5, y: 1.2}
+    nodeBPosition: {x: 0.5, y: -0.2}
     isMovable: 0
-  - ropeColor: {r: 0, g: 0, b: 0, a: 0}
-    nodeAPosition: {x: -0.5, y: -2.5}
-    nodeBPosition: {x: 1.5, y: -0.5}
-    ropeMaterial: {fileID: 0}
+  - ropeID: 0
+    ropePrefab: {fileID: 0}
+    nodeAPosition: {x: -0.5, y: -0.2}
+    nodeBPosition: {x: 1.5, y: 1.2}
     isMovable: 0

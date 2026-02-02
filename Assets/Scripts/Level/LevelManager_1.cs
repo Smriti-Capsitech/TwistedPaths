@@ -1,9 +1,4 @@
-<<<<<<< Updated upstream
-﻿
-using UnityEngine;
-=======
 ﻿using UnityEngine;
->>>>>>> Stashed changes
 
 public class LevelManager_1 : MonoBehaviour
 {
@@ -26,12 +21,9 @@ public class LevelManager_1 : MonoBehaviour
 
     void Start()
     {
-<<<<<<< Updated upstream
-        // 🔥 CRITICAL FIX: TELL SYSTEM THIS IS CHAPTER 2
+        // Tell system this is Chapter 2
         PlayerPrefs.SetInt("ACTIVE_CHAPTER", 2);
 
-=======
->>>>>>> Stashed changes
         currentLevelIndex = PlayerPrefs.GetInt("CURRENT_LEVEL", 0);
         LoadLevel(currentLevelIndex);
     }
@@ -40,13 +32,10 @@ public class LevelManager_1 : MonoBehaviour
     {
         Time.timeScale = 1f;
 
-<<<<<<< Updated upstream
-        // ✅ Banner ONLY during gameplay
+        // Show banner during gameplay
         if (AdManager.Instance != null)
             AdManager.Instance.ShowBanner();
 
-=======
->>>>>>> Stashed changes
         if (LevelCompleteUI_1.Instance != null)
             LevelCompleteUI_1.Instance.Hide();
 
@@ -57,49 +46,68 @@ public class LevelManager_1 : MonoBehaviour
 
         LevelData_1 data = levels[index];
 
-        // ✅ UPDATE LEVEL TEXT
+        // Update level text
         if (LevelUI.Instance != null)
             LevelUI.Instance.SetLevel(index + 1);
 
         GameManager.Instance.currentLevelData = data;
         GameManager.Instance.SetMoveLimit(data.maxMoves);
 
+        // ---------- PART A SLOTS ----------
         foreach (var pos in data.partASlotPositions)
-            Instantiate(slotPrefab, pos, Quaternion.identity, levelParent.transform)
-                .GetComponent<Slot>().slotType = SlotType.PartA;
+        {
+            GameObject slotObj = Instantiate(
+                slotPrefab,
+                pos,
+                Quaternion.identity,
+                levelParent.transform
+            );
 
-<<<<<<< Updated upstream
             Slot slot = slotObj.GetComponent<Slot>();
             if (slot != null)
                 slot.slotType = SlotType.PartA;
         }
 
-=======
->>>>>>> Stashed changes
+        // ---------- PART B SLOTS ----------
         foreach (var pos in data.partBSlotPositions)
-            Instantiate(slotPrefab, pos, Quaternion.identity, levelParent.transform)
-                .GetComponent<Slot>().slotType = SlotType.PartB;
+        {
+            GameObject slotObj = Instantiate(
+                slotPrefab,
+                pos,
+                Quaternion.identity,
+                levelParent.transform
+            );
 
-<<<<<<< Updated upstream
             Slot slot = slotObj.GetComponent<Slot>();
             if (slot != null)
                 slot.slotType = SlotType.PartB;
         }
 
-=======
->>>>>>> Stashed changes
+        // ---------- ROPES ----------
         foreach (var rope in data.ropes)
         {
-            GameObject a = Instantiate(nodePrefab, rope.nodeAPosition,
-                Quaternion.identity, levelParent.transform);
+            GameObject a = Instantiate(
+                nodePrefab,
+                rope.nodeAPosition,
+                Quaternion.identity,
+                levelParent.transform
+            );
             a.GetComponent<NodeDrag>().nodeType = NodeType.PartA;
 
-            GameObject b = Instantiate(nodePrefab, rope.nodeBPosition,
-                Quaternion.identity, levelParent.transform);
+            GameObject b = Instantiate(
+                nodePrefab,
+                rope.nodeBPosition,
+                Quaternion.identity,
+                levelParent.transform
+            );
             b.GetComponent<NodeDrag>().nodeType = NodeType.PartB;
 
-            GameObject r = Instantiate(rope.ropePrefab,
-                Vector3.zero, Quaternion.identity, levelParent.transform);
+            GameObject r = Instantiate(
+                rope.ropePrefab,
+                Vector3.zero,
+                Quaternion.identity,
+                levelParent.transform
+            );
 
             RopeController_1 rc = r.GetComponent<RopeController_1>();
             rc.nodeA = a.transform;
@@ -108,7 +116,8 @@ public class LevelManager_1 : MonoBehaviour
         }
 
         GameManager.Instance.RegisterRopes(
-            levelParent.GetComponentsInChildren<RopeController_1>());
+            levelParent.GetComponentsInChildren<RopeController_1>()
+        );
     }
 
     public void RestartLevel()
@@ -121,7 +130,7 @@ public class LevelManager_1 : MonoBehaviour
         currentLevelIndex++;
 
         if (currentLevelIndex >= levels.Length)
-            currentLevelIndex = 0;   // loop or you can stop
+            currentLevelIndex = 0;   // loop back if needed
 
         PlayerPrefs.SetInt("CURRENT_LEVEL", currentLevelIndex);
 
