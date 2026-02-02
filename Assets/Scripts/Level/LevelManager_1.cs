@@ -1,37 +1,36 @@
-<<<<<<< Updated upstream
 ﻿
 using UnityEngine;
-=======
-﻿using UnityEngine;
->>>>>>> Stashed changes
 
 public class LevelManager_1 : MonoBehaviour
 {
     public static LevelManager_1 Instance;
 
+    [Header("Levels")]
     public LevelData_1[] levels;
+
+    [Header("Prefabs")]
     public GameObject slotPrefab;
     public GameObject nodePrefab;
+    public GameObject ropePrefab;
 
-    GameObject levelParent;
-    int currentLevelIndex;
+    private GameObject levelParent;
+    private int currentLevelIndex = 0;
 
     void Awake()
     {
-        if (Instance != null && Instance != this)
-            Destroy(Instance.gameObject);
-
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
         Instance = this;
     }
 
     void Start()
     {
-<<<<<<< Updated upstream
         // 🔥 CRITICAL FIX: TELL SYSTEM THIS IS CHAPTER 2
         PlayerPrefs.SetInt("ACTIVE_CHAPTER", 2);
 
-=======
->>>>>>> Stashed changes
         currentLevelIndex = PlayerPrefs.GetInt("CURRENT_LEVEL", 0);
         LoadLevel(currentLevelIndex);
     }
@@ -40,13 +39,10 @@ public class LevelManager_1 : MonoBehaviour
     {
         Time.timeScale = 1f;
 
-<<<<<<< Updated upstream
         // ✅ Banner ONLY during gameplay
         if (AdManager.Instance != null)
             AdManager.Instance.ShowBanner();
 
-=======
->>>>>>> Stashed changes
         if (LevelCompleteUI_1.Instance != null)
             LevelCompleteUI_1.Instance.Hide();
 
@@ -57,58 +53,63 @@ public class LevelManager_1 : MonoBehaviour
 
         LevelData_1 data = levels[index];
 
-        // ✅ UPDATE LEVEL TEXT
-        if (LevelUI.Instance != null)
-            LevelUI.Instance.SetLevel(index + 1);
-
         GameManager.Instance.currentLevelData = data;
         GameManager.Instance.SetMoveLimit(data.maxMoves);
 
         foreach (var pos in data.partASlotPositions)
-            Instantiate(slotPrefab, pos, Quaternion.identity, levelParent.transform)
-                .GetComponent<Slot>().slotType = SlotType.PartA;
+        {
+            GameObject slotObj =
+                Instantiate(slotPrefab, pos, Quaternion.identity, levelParent.transform);
 
-<<<<<<< Updated upstream
             Slot slot = slotObj.GetComponent<Slot>();
             if (slot != null)
                 slot.slotType = SlotType.PartA;
         }
 
-=======
->>>>>>> Stashed changes
         foreach (var pos in data.partBSlotPositions)
-            Instantiate(slotPrefab, pos, Quaternion.identity, levelParent.transform)
-                .GetComponent<Slot>().slotType = SlotType.PartB;
+        {
+            GameObject slotObj =
+                Instantiate(slotPrefab, pos, Quaternion.identity, levelParent.transform);
 
-<<<<<<< Updated upstream
             Slot slot = slotObj.GetComponent<Slot>();
             if (slot != null)
                 slot.slotType = SlotType.PartB;
         }
 
-=======
->>>>>>> Stashed changes
         foreach (var rope in data.ropes)
         {
-            GameObject a = Instantiate(nodePrefab, rope.nodeAPosition,
-                Quaternion.identity, levelParent.transform);
-            a.GetComponent<NodeDrag>().nodeType = NodeType.PartA;
+            GameObject nodeAObj =
+                Instantiate(nodePrefab, rope.nodeAPosition, Quaternion.identity, levelParent.transform);
 
-            GameObject b = Instantiate(nodePrefab, rope.nodeBPosition,
-                Quaternion.identity, levelParent.transform);
-            b.GetComponent<NodeDrag>().nodeType = NodeType.PartB;
+            NodeDrag nodeA = nodeAObj.GetComponent<NodeDrag>();
+            if (nodeA != null)
+                nodeA.nodeType = NodeType.PartA;
 
-            GameObject r = Instantiate(rope.ropePrefab,
-                Vector3.zero, Quaternion.identity, levelParent.transform);
+            GameObject nodeBObj =
+                Instantiate(nodePrefab, rope.nodeBPosition, Quaternion.identity, levelParent.transform);
 
-            RopeController_1 rc = r.GetComponent<RopeController_1>();
-            rc.nodeA = a.transform;
-            rc.nodeB = b.transform;
-            rc.ropeID = rope.ropeID;
+            NodeDrag nodeB = nodeBObj.GetComponent<NodeDrag>();
+            if (nodeB != null)
+                nodeB.nodeType = NodeType.PartB;
+
+            GameObject ropeObj =
+                Instantiate(ropePrefab, Vector3.zero, Quaternion.identity, levelParent.transform);
+
+            RopeController_1 rc = ropeObj.GetComponent<RopeController_1>();
+            if (rc == null) continue;
+
+            rc.nodeA = nodeAObj.transform;
+            rc.nodeB = nodeBObj.transform;
         }
 
         GameManager.Instance.RegisterRopes(
-            levelParent.GetComponentsInChildren<RopeController_1>());
+            levelParent.GetComponentsInChildren<RopeController_1>()
+        );
+
+        GameManager.Instance.UpdateTopOrderMovability();
+
+        if (LevelUI.Instance != null)
+            LevelUI.Instance.SetLevel(currentLevelIndex + 1);
     }
 
     public void RestartLevel()
@@ -119,12 +120,7 @@ public class LevelManager_1 : MonoBehaviour
     public void NextLevel()
     {
         currentLevelIndex++;
-
-        if (currentLevelIndex >= levels.Length)
-            currentLevelIndex = 0;   // loop or you can stop
-
-        PlayerPrefs.SetInt("CURRENT_LEVEL", currentLevelIndex);
-
+        if (currentLevelIndex >= levels.Length) return;
         LoadLevel(currentLevelIndex);
     }
 

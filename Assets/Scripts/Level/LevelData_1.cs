@@ -1,10 +1,13 @@
-﻿using UnityEngine;
+﻿
+
+
+using UnityEngine;
 
 public enum RopeMovementRule
 {
     AllMovable,
     StaticFromData,
-    OnlyTopOrder
+    OnlyTopOrder   // ✅ NEW
 }
 
 [CreateAssetMenu(menuName = "Rope Puzzle/Level Data")]
@@ -29,19 +32,16 @@ public class LevelData_1 : ScriptableObject
     public RopeData[] ropes;
 }
 
+
 [System.Serializable]
 public class RopeData
 {
-    [Header("Rope Identification")]
-    public int ropeID;
-
-    [Header("Rope Prefab (MUST ASSIGN)")]
-    public GameObject ropePrefab;
-
-    [Header("Node Positions")]
+    public Color ropeColor;
     public Vector2 nodeAPosition;
     public Vector2 nodeBPosition;
+    public Material ropeMaterial;
 
     [Header("Movement")]
-    public bool isMovable = true;
+    public bool isMovable = true;   
 }
+
