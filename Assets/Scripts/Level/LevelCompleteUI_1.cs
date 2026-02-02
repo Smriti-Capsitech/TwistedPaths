@@ -1,4 +1,9 @@
+<<<<<<< Updated upstream
+﻿
 using UnityEngine;
+=======
+﻿using UnityEngine;
+>>>>>>> Stashed changes
 using UnityEngine.SceneManagement;
 
 public class LevelCompleteUI_1 : MonoBehaviour
@@ -25,12 +30,13 @@ public class LevelCompleteUI_1 : MonoBehaviour
     public void Show()
     {
         panel.SetActive(true);
+<<<<<<< Updated upstream
 
-        // Hide banner ad
+        // ❌ Banner must NEVER appear here
         if (AdManager.Instance != null)
             AdManager.Instance.HideBanner();
 
-        // Pause gameplay
+        // ⛔ Pause gameplay
         Time.timeScale = 0f;
     }
 
@@ -41,12 +47,15 @@ public class LevelCompleteUI_1 : MonoBehaviour
     {
         panel.SetActive(false);
 
-        // Resume gameplay
+        // ✅ Resume gameplay first
         Time.timeScale = 1f;
 
-        // Notify ad manager after completion
+        // ✅ Count level completion AFTER resume
         if (AdManager.Instance != null)
             AdManager.Instance.OnLevelComplete();
+=======
+        Time.timeScale = 0f;
+>>>>>>> Stashed changes
     }
 
     // =========================
@@ -56,28 +65,38 @@ public class LevelCompleteUI_1 : MonoBehaviour
     {
         Hide();
 
-        int chapter = 2;   // Chapter 2 only
+<<<<<<< Updated upstream
+        int chapter = 2; // 🔥 Chapter 2 ONLY
         int currentLevel = PlayerPrefs.GetInt("CURRENT_LEVEL", 0);
 
-        // Save stars
+        // ⭐ Save stars
         PlayerPrefs.SetInt($"CH{chapter}_LEVEL_STARS_{currentLevel}", 3);
 
-        // Unlock next level
+        // 🔓 Unlock next level
         int unlocked = PlayerPrefs.GetInt($"CH{chapter}_UNLOCKED_LEVEL", 0);
         if (currentLevel + 1 > unlocked)
             PlayerPrefs.SetInt($"CH{chapter}_UNLOCKED_LEVEL", currentLevel + 1);
 
         PlayerPrefs.Save();
+=======
+        int currentLevel =
+            PlayerPrefs.GetInt("CURRENT_LEVEL", 0);
 
-        // Last level → Chapter Select
+        PlayerPrefs.SetInt("CURRENT_LEVEL", currentLevel + 1);
+>>>>>>> Stashed changes
+
+        // 🛑 Last level → Chapter Select
         if (LevelManager_1.Instance.IsLastLevel())
         {
             SceneManager.LoadScene("ChapterSelectScene");
             return;
         }
 
-        // Move to next level
+<<<<<<< Updated upstream
+        // ▶ Load next level
         PlayerPrefs.SetInt("CURRENT_LEVEL", currentLevel + 1);
+=======
+>>>>>>> Stashed changes
         LevelManager_1.Instance.NextLevel();
     }
 
