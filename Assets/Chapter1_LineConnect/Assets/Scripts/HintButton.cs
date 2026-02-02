@@ -2,19 +2,24 @@
 // using UnityEngine;
 // using System.Collections;
 // using UnityEngine.SceneManagement;
+
 // public class HintButton : MonoBehaviour
 // {
 //     [Header("References")]
 //     public LevelManager levelManager;
-//     public CircularDotGenerator outerDots;
-//     public InnerGridGenerator innerGrid; // 🔥 ADD THIS
+//     public CircularLineController lineController;
 
-//     [Header("Visual")]
+//     [Header("UI")]
+//     public GameObject circularBoard;
+//     public GameObject settingsPanel;
+
+//     [Header("Hint Visual")]
 //     public Color hintColor = Color.cyan;
 //     public float hintDuration = 2f;
 
 //     bool hintUsed = false;
 //     bool isShowing = false;
+//     bool isPaused = false;
 
 //     // =========================
 //     // 💡 SHOW HINT
@@ -22,7 +27,6 @@
 //     public void ShowHint()
 //     {
 //         if (hintUsed || isShowing) return;
-//         if (levelManager == null || outerDots == null) return;
 
 //         LevelData level = levelManager.GetCurrentLevel();
 //         if (level == null || level.hintDots == null || level.hintDots.Length == 0)
@@ -32,95 +36,99 @@
 //         hintUsed = true;
 //     }
 
-//     // =========================
-//     // 🔦 FLASH OUTER + INNER DOTS
-//     // =========================
 //     IEnumerator FlashDots(int[] indices)
 //     {
 //         isShowing = true;
-
-//         SpriteRenderer[] renderers = new SpriteRenderer[indices.Length];
-//         Color[] original = new Color[indices.Length];
-
-//         for (int i = 0; i < indices.Length; i++)
-//         {
-//             int idx = indices[i];
-//             SpriteRenderer sr = null;
-
-//             // -------- OUTER DOTS (0–11)
-//             if (idx >= 0 && idx < outerDots.dots.Count)
-//             {
-//                 sr = outerDots.dots[idx].GetComponent<SpriteRenderer>();
-//             }
-//             // -------- INNER DOTS (12–15)
-//             else if (idx >= 12 && innerGrid != null)
-//             {
-//                 InnerSnapNode node = innerGrid.nodes.Find(n => n.index == idx);
-//                 if (node != null)
-//                     sr = node.GetComponent<SpriteRenderer>();
-//             }
-
-//             if (sr == null) continue;
-
-//             renderers[i] = sr;
-//             original[i] = sr.color;
-//             sr.color = hintColor;
-//         }
-
 //         yield return new WaitForSeconds(hintDuration);
-
-//         for (int i = 0; i < renderers.Length; i++)
-//         {
-//             if (renderers[i] != null)
-//                 renderers[i].color = original[i];
-//         }
-
 //         isShowing = false;
 //     }
 
 //     // =========================
-//     // 🔁 RESET HINT STATE
+//     // ⏸ PAUSE
+//     // =========================
+//     public void OnPause()
+//     {
+//         if (isPaused) return;
+//         isPaused = true;
+
+//         Time.timeScale = 0f;
+
+//         // 🔥 Hide only gameplay visuals
+//         if (circularBoard != null)
+//             circularBoard.SetActive(false);
+
+//         if (lineController != null)
+//         {
+//             LineRenderer lr = lineController.GetComponent<LineRenderer>();
+//             if (lr != null) lr.enabled = false;
+//         }
+
+//         if (settingsPanel != null)
+//             settingsPanel.SetActive(true);
+//     }
+
+//     // =========================
+//     // ▶ RESUME
+//     // =========================
+//     public void OnResume()
+//     {
+//         Time.timeScale = 1f;
+//         isPaused = false;
+
+//         if (settingsPanel != null)
+//             settingsPanel.SetActive(false);
+
+//         if (circularBoard != null)
+//             circularBoard.SetActive(true);
+
+//         if (lineController != null)
+//         {
+//             LineRenderer lr = lineController.GetComponent<LineRenderer>();
+//             if (lr != null) lr.enabled = true;
+//         }
+//     }
+
+//     // =========================
+//     // 🔁 RESTART
+//     // =========================
+//     public void OnRestart()
+//     {
+//         Time.timeScale = 1f;
+//         isPaused = false;
+
+//         if (settingsPanel != null)
+//             settingsPanel.SetActive(false);
+
+//         if (circularBoard != null)
+//             circularBoard.SetActive(true);
+
+//         if (lineController != null)
+//         {
+//             LineRenderer lr = lineController.GetComponent<LineRenderer>();
+//             if (lr != null) lr.enabled = true;
+//         }
+
+//         levelManager.ReplayCurrentLevel();
+//     }
+
+//     // =========================
+//     // 🏠 HOME
+//     // =========================
+//     public void OnHome()
+//     {
+//         Time.timeScale = 1f;
+//         SceneManager.LoadScene("ChapterSelectScene");
+//     }
+
+//     // =========================
+//     // 🔄 RESET
 //     // =========================
 //     public void ResetHints()
 //     {
 //         hintUsed = false;
 //         isShowing = false;
 //     }
-
-//     // =========================
-//     // 🔁 REPLAY CURRENT LEVEL
-//     // =========================
-//     public void ReplayLevel()
-//     {
-//         if (levelManager == null)
-//         {
-//             Debug.LogError("❌ LevelManager missing in HintButton");
-//             return;
-//         }
-
-//         Debug.Log("🔁 Replay current level");
-
-//         ResetHints();
-//         levelManager.ReplayCurrentLevel();
-//     }
-//     // 🔙 BACK TO CHAPTER SELECT (SAFE)
-//     public void OnBackToHome()
-//     {
-//         // ✅ Always restore time
-//         Time.timeScale = 1f;
-
-//         // ✅ Destroy ONLY Chapter 2 LevelManager
-//         if (LevelManager_1.Instance != null)
-//         {
-//             Destroy(LevelManager_1.Instance.gameObject);
-//         }
-
-//         // ✅ Load chapter select
-//         SceneManager.LoadScene("ChapterSelectScene");
-//     }
 // }
-
-
 using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
@@ -129,15 +137,19 @@ public class HintButton : MonoBehaviour
 {
     [Header("References")]
     public LevelManager levelManager;
-    public CircularDotGenerator outerDots;
-    public InnerGridGenerator innerGrid; // 🔥 ADD THIS
+    public CircularLineController lineController;
 
-    [Header("Visual")]
+    [Header("UI")]
+    public GameObject circularBoard;
+    public GameObject settingsPanel;
+
+    [Header("Hint Visual")]
     public Color hintColor = Color.cyan;
     public float hintDuration = 2f;
 
     bool hintUsed = false;
     bool isShowing = false;
+    bool isPaused = false;
 
     // =========================
     // 💡 SHOW HINT
@@ -145,7 +157,6 @@ public class HintButton : MonoBehaviour
     public void ShowHint()
     {
         if (hintUsed || isShowing) return;
-        if (levelManager == null || outerDots == null) return;
 
         LevelData level = levelManager.GetCurrentLevel();
         if (level == null || level.hintDots == null || level.hintDots.Length == 0)
@@ -155,54 +166,101 @@ public class HintButton : MonoBehaviour
         hintUsed = true;
     }
 
-    // =========================
-    // 🔦 FLASH OUTER + INNER DOTS
-    // =========================
     IEnumerator FlashDots(int[] indices)
     {
         isShowing = true;
-
-        SpriteRenderer[] renderers = new SpriteRenderer[indices.Length];
-        Color[] original = new Color[indices.Length];
-
-        for (int i = 0; i < indices.Length; i++)
-        {
-            int idx = indices[i];
-            SpriteRenderer sr = null;
-
-            // -------- OUTER DOTS (0–11)
-            if (idx >= 0 && idx < outerDots.dots.Count)
-            {
-                sr = outerDots.dots[idx].GetComponent<SpriteRenderer>();
-            }
-            // -------- INNER DOTS (12–15)
-            else if (idx >= 12 && innerGrid != null)
-            {
-                InnerSnapNode node = innerGrid.nodes.Find(n => n.index == idx);
-                if (node != null)
-                    sr = node.GetComponent<SpriteRenderer>();
-            }
-
-            if (sr == null) continue;
-
-            renderers[i] = sr;
-            original[i] = sr.color;
-            sr.color = hintColor;
-        }
-
         yield return new WaitForSeconds(hintDuration);
-
-        for (int i = 0; i < renderers.Length; i++)
-        {
-            if (renderers[i] != null)
-                renderers[i].color = original[i];
-        }
-
         isShowing = false;
     }
 
     // =========================
-    // 🔁 RESET HINT STATE
+    // ⏸ PAUSE
+    // =========================
+    public void OnPause()
+    {
+        if (isPaused) return;
+        isPaused = true;
+
+        Time.timeScale = 0f;
+
+        // Hide gameplay board
+        if (circularBoard != null)
+            circularBoard.SetActive(false);
+
+        // Hide rope visuals ONLY (not GameObjects)
+        SetRopeVisuals(false);
+
+        // Hide line
+        if (lineController != null)
+        {
+            LineRenderer lr = lineController.GetComponent<LineRenderer>();
+            if (lr != null) lr.enabled = false;
+        }
+
+        if (settingsPanel != null)
+            settingsPanel.SetActive(true);
+    }
+
+    // =========================
+    // ▶ RESUME
+    // =========================
+    public void OnResume()
+    {
+        Time.timeScale = 1f;
+        isPaused = false;
+
+        if (settingsPanel != null)
+            settingsPanel.SetActive(false);
+
+        if (circularBoard != null)
+            circularBoard.SetActive(true);
+
+        // Restore rope visuals
+        SetRopeVisuals(true);
+
+        if (lineController != null)
+        {
+            LineRenderer lr = lineController.GetComponent<LineRenderer>();
+            if (lr != null) lr.enabled = true;
+        }
+    }
+
+    // =========================
+    // 🔁 RESTART
+    // =========================
+    public void OnRestart()
+    {
+        Time.timeScale = 1f;
+        isPaused = false;
+
+        if (settingsPanel != null)
+            settingsPanel.SetActive(false);
+
+        if (circularBoard != null)
+            circularBoard.SetActive(true);
+
+        SetRopeVisuals(true);
+
+        if (lineController != null)
+        {
+            LineRenderer lr = lineController.GetComponent<LineRenderer>();
+            if (lr != null) lr.enabled = true;
+        }
+
+        levelManager.ReplayCurrentLevel();
+    }
+
+    // =========================
+    // 🏠 HOME
+    // =========================
+    public void OnHome()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("ChapterSelectScene");
+    }
+
+    // =========================
+    // 🔄 RESET
     // =========================
     public void ResetHints()
     {
@@ -211,42 +269,24 @@ public class HintButton : MonoBehaviour
     }
 
     // =========================
-    // 🔁 REPLAY CURRENT LEVEL
+    // 🔥 ROPE VISUAL FIX (FINAL)
     // =========================
-    public void ReplayLevel()
+    void SetRopeVisuals(bool visible)
     {
-        if (levelManager == null)
+        RopeNode[] ropeNodes =
+            Object.FindObjectsByType<RopeNode>(FindObjectsSortMode.None);
+
+        foreach (var node in ropeNodes)
         {
-            Debug.LogError("❌ LevelManager missing in HintButton");
-            return;
+            if (node == null) continue;
+
+            // Hide sprite
+            SpriteRenderer sr = node.GetComponent<SpriteRenderer>();
+            if (sr != null) sr.enabled = visible;
+
+            // Disable interaction
+            Collider2D col = node.GetComponent<Collider2D>();
+            if (col != null) col.enabled = visible;
         }
-
-        ResetHints();
-
-        // 🔥 ADD THIS ONLY (Rewarded Ad every 2 replays)
-        if (AdManager.Instance != null)
-        {
-            AdManager.Instance.OnReplay(() =>
-            {
-                levelManager.ReplayCurrentLevel();
-            });
-        }
-        else
-        {
-            levelManager.ReplayCurrentLevel();
-        }
-    }
-
-    // 🔙 BACK TO CHAPTER SELECT (SAFE)
-    public void OnBackToHome()
-    {
-        Time.timeScale = 1f;
-
-        if (LevelManager_1.Instance != null)
-        {
-            Destroy(LevelManager_1.Instance.gameObject);
-        }
-
-        SceneManager.LoadScene("ChapterSelectScene");
     }
 }

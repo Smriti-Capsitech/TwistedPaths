@@ -33,11 +33,25 @@ public class GameOverButtons : MonoBehaviour
         PlayerPrefs.SetInt("CURRENT_LEVEL", currentLevel + 1);
         SceneManager.LoadScene("SampleScene");
     }
+    public void OnBack()
+    {
+        OpenChapterPopup();
+    }
+
 
     // 🏠 MAIN MENU BUTTON
-    public void MainMenu()
+     void OpenChapterPopup()
     {
-        PlayerPrefs.DeleteKey("CURRENT_LEVEL");
+        Time.timeScale = 1f;
+
+        // ✅ VERY IMPORTANT
+        // Preserve current chapter so popup knows what to show
+        int activeChapter = PlayerPrefs.GetInt("ACTIVE_CHAPTER", 1);
+        PlayerPrefs.SetInt("ACTIVE_CHAPTER", activeChapter);
+
+        // ✅ Tell ChapterSelectScene to open popup
+        PlayerPrefs.SetInt("OPEN_CHAPTER_POPUP", 1);
+
         SceneManager.LoadScene("ChapterSelectScene");
     }
 }

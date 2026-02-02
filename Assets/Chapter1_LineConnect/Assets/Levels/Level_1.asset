@@ -15,6 +15,6 @@ MonoBehaviour:
   targetPattern: 00000000020000000400000006000000080000000a00000000000000
   initialRope: 06000000080000000a00000006000000
   showPreview: 1
-  timeLimit: 30
+  timeLimit: 400
   hasHint: 1
   hintDots: 04000000
