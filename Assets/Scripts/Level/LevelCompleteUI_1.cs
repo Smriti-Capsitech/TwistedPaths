@@ -1,9 +1,5 @@
-<<<<<<< Updated upstream
 ﻿
 using UnityEngine;
-=======
-﻿using UnityEngine;
->>>>>>> Stashed changes
 using UnityEngine.SceneManagement;
 
 public class LevelCompleteUI_1 : MonoBehaviour
@@ -13,14 +9,13 @@ public class LevelCompleteUI_1 : MonoBehaviour
 
     void Awake()
     {
-        if (Instance != null && Instance != this)
-            Destroy(Instance.gameObject);
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
         Instance = this;
-
-        if (panel == null)
-            panel = gameObject;
-
         panel.SetActive(false);
     }
 
@@ -30,7 +25,6 @@ public class LevelCompleteUI_1 : MonoBehaviour
     public void Show()
     {
         panel.SetActive(true);
-<<<<<<< Updated upstream
 
         // ❌ Banner must NEVER appear here
         if (AdManager.Instance != null)
@@ -53,9 +47,6 @@ public class LevelCompleteUI_1 : MonoBehaviour
         // ✅ Count level completion AFTER resume
         if (AdManager.Instance != null)
             AdManager.Instance.OnLevelComplete();
-=======
-        Time.timeScale = 0f;
->>>>>>> Stashed changes
     }
 
     // =========================
@@ -65,7 +56,6 @@ public class LevelCompleteUI_1 : MonoBehaviour
     {
         Hide();
 
-<<<<<<< Updated upstream
         int chapter = 2; // 🔥 Chapter 2 ONLY
         int currentLevel = PlayerPrefs.GetInt("CURRENT_LEVEL", 0);
 
@@ -78,12 +68,6 @@ public class LevelCompleteUI_1 : MonoBehaviour
             PlayerPrefs.SetInt($"CH{chapter}_UNLOCKED_LEVEL", currentLevel + 1);
 
         PlayerPrefs.Save();
-=======
-        int currentLevel =
-            PlayerPrefs.GetInt("CURRENT_LEVEL", 0);
-
-        PlayerPrefs.SetInt("CURRENT_LEVEL", currentLevel + 1);
->>>>>>> Stashed changes
 
         // 🛑 Last level → Chapter Select
         if (LevelManager_1.Instance.IsLastLevel())
@@ -92,11 +76,8 @@ public class LevelCompleteUI_1 : MonoBehaviour
             return;
         }
 
-<<<<<<< Updated upstream
         // ▶ Load next level
         PlayerPrefs.SetInt("CURRENT_LEVEL", currentLevel + 1);
-=======
->>>>>>> Stashed changes
         LevelManager_1.Instance.NextLevel();
     }
 
@@ -115,6 +96,10 @@ public class LevelCompleteUI_1 : MonoBehaviour
     public void OnBackToHome()
     {
         Time.timeScale = 1f;
+
+        if (LevelManager_1.Instance != null)
+            Destroy(LevelManager_1.Instance.gameObject);
+
         SceneManager.LoadScene("ChapterSelectScene");
     }
 }

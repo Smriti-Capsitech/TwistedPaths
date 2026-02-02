@@ -9,7 +9,7 @@ public class LevelUI : MonoBehaviour
 
     void Awake()
     {
-        if (Instance != null && Instance != this)
+        if (Instance != null)
         {
             Destroy(gameObject);
             return;
@@ -19,7 +19,6 @@ public class LevelUI : MonoBehaviour
 
     public void SetLevel(int levelNumber)
     {
-        if (levelText != null)
-            levelText.text = "Level " + levelNumber;
+        levelText.text = $"Level {levelNumber}";
     }
 }
