@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 10}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -56,12 +56,10 @@ LineRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b3fbf1af7e7516e428d1e3d3959e5571, type: 2}
-  - {fileID: 2100000, guid: b3fbf1af7e7516e428d1e3d3959e5571, type: 2}
-  - {fileID: 2100000, guid: b3fbf1af7e7516e428d1e3d3959e5571, type: 2}
+  - {fileID: 2100000, guid: d95411c08294bf34d8db3e142e4d2216, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -92,8 +90,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.2403183
-        value: 0.2752285
+        time: 0.39883423
+        value: 0.39691353
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -105,7 +103,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.9254902, g: 0.066666655, b: 0.066666655, a: 1}
+      key0: {r: 1, g: 1, b: 1, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -130,7 +128,7 @@ LineRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_ColorSpace: -1
+      m_ColorSpace: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
@@ -138,7 +136,7 @@ LineRenderer:
     alignment: 0
     textureMode: 0
     textureScale: {x: 1, y: 1}
-    shadowBias: 0.5
+    shadowBias: 0
     generateLightingData: 0
   m_MaskInteraction: 0
   m_UseWorldSpace: 1
@@ -160,15 +158,9 @@ MonoBehaviour:
   nodeB: {fileID: 0}
   isMovable: 1
   moveOrder: 0
-  isTouchingNode: 0
-  normalColor: {r: 1, g: 1, b: 1, a: 1}
-  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  blockedColor: {r: 1, g: 0, b: 0, a: 1}
-  normalWidth: 0.25
-  highlightWidth: 0.25
-  segments: 20
-  sagAmount: 0.5
-  nodeBlockRadius: 0.25
+  ropeID: 0
+  segments: 10
+  sagAmount: 0.4
 --- !u!50 &7488403812322971619
 Rigidbody2D:
   serializedVersion: 5
