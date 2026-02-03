@@ -32,16 +32,25 @@ public class LevelData_1 : ScriptableObject
     public RopeData[] ropes;
 }
 
-
 [System.Serializable]
 public class RopeData
 {
+    [Header("Identification")]
+    public int ropeID;                 // ✅ ADD THIS
+
+    [Header("Prefab")]
+    public GameObject ropePrefab;      // ✅ ADD THIS
+
+    [Header("Visual")]
     public Color ropeColor;
-    public Vector2 nodeAPosition;
-    public Vector2 nodeBPosition;
     public Material ropeMaterial;
 
+    [Header("Nodes")]
+    public Vector2 nodeAPosition;
+    public Vector2 nodeBPosition;
+
     [Header("Movement")]
-    public bool isMovable = true;   
+    public bool isMovable = true;
 }
+
 

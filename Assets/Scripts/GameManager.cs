@@ -360,24 +360,29 @@ public class GameManager : MonoBehaviour
     // REGISTER MOVE (called from NodeDrag)
     // ==================================================
     public void RegisterMove()
+{
+    if (levelEnded) return;
+
+    currentMoves++;
+
+    // 🔥 UPDATE MOVE UI
+    if (MoveCounterUI.Instance != null)
+        MoveCounterUI.Instance.UseMove();
+
+    // ✅ WIN CHECK FIRST
+    if (IsLevelSolved())
     {
-        if (levelEnded) return;
-
-        currentMoves++;
-
-        // ✅ WIN CHECK FIRST
-        if (IsLevelSolved())
-        {
-            WinLevel();
-            return;
-        }
-
-        // ❌ LOSE CHECK
-        if (currentMoves >= maxMoves)
-        {
-            LoseLevel();
-        }
+        WinLevel();
+        return;
     }
+
+    // ❌ LOSE CHECK
+    if (currentMoves >= maxMoves)
+    {
+        LoseLevel();
+    }
+}
+
 
     // ==================================================
     // REGISTER ROPES
@@ -597,4 +602,22 @@ public class GameManager : MonoBehaviour
         Vector2 closest = a + t * ab;
         return Vector2.Distance(p, closest);
     }
+
+
+    // =====================================
+// BONUS MOVES
+// =====================================
+public void AddBonusMoves(int amount)
+{
+    if (levelEnded) return;
+
+    // Reduce used moves
+    currentMoves -= amount;
+    currentMoves = Mathf.Clamp(currentMoves, 0, maxMoves);
+
+    // Update UI
+    if (MoveCounterUI.Instance != null)
+        MoveCounterUI.Instance.AddExtraMoves(amount);
+}
+
 }

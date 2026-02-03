@@ -16,23 +16,27 @@ MonoBehaviour:
   maxMoves: 2
   movementRule: 2
   partASlotPositions:
+  - {x: -1.3, y: 3}
+  - {x: -1.3, y: 2}
   - {x: -1.3, y: 1}
   - {x: -1.3, y: 0}
-  - {x: -1.3, y: -1}
-  - {x: -1.3, y: -2}
   partBSlotPositions:
+  - {x: 1.3, y: 3}
+  - {x: 1.3, y: 2}
   - {x: 1.3, y: 1}
   - {x: 1.3, y: 0}
-  - {x: 1.3, y: -1}
-  - {x: 1.3, y: -2}
   ropes:
-  - ropeColor: {r: 0.9716981, g: 0.022917405, b: 0.022917405, a: 1}
-    nodeAPosition: {x: -1.3, y: 1}
-    nodeBPosition: {x: 1.3, y: -1}
-    ropeMaterial: {fileID: 2100000, guid: b3fbf1af7e7516e428d1e3d3959e5571, type: 2}
+  - ropeID: 0
+    ropePrefab: {fileID: 6842435808837969183, guid: f277fa3f44246d146b4b64c989698963, type: 3}
+    ropeColor: {r: 1, g: 1, b: 1, a: 0}
+    ropeMaterial: {fileID: 0}
+    nodeAPosition: {x: -1.3, y: 3}
+    nodeBPosition: {x: 1.3, y: 0.5}
     isMovable: 1
-  - ropeColor: {r: 0.66611534, g: 1, b: 0.042452812, a: 1}
+  - ropeID: 0
+    ropePrefab: {fileID: 6842435808837969183, guid: 849d798ba52f43e43b38202c228f9139, type: 3}
+    ropeColor: {r: 1, g: 1, b: 1, a: 0}
+    ropeMaterial: {fileID: 0}
     nodeAPosition: {x: -1.3, y: 0}
     nodeBPosition: {x: 1.3, y: 0}
-    ropeMaterial: {fileID: 2100000, guid: b3fbf1af7e7516e428d1e3d3959e5571, type: 2}
     isMovable: 1
