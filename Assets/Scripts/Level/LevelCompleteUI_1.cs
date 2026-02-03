@@ -1,70 +1,4 @@
-﻿// using UnityEngine;
-// using UnityEngine.SceneManagement;
- 
-// public class LevelCompleteUI_1 : MonoBehaviour
-// {
-//     public static LevelCompleteUI_1 Instance;
-//     public GameObject panel;
- 
-//     void Awake()
-//     {
-//         if (Instance != null && Instance != this)
-//             Destroy(Instance.gameObject);
- 
-//         Instance = this;
- 
-//         if (panel == null)
-//             panel = gameObject;
- 
-//         panel.SetActive(false);
-//     }
- 
-//     public void Show()
-//     {
-//         panel.SetActive(true);
-//         Time.timeScale = 0f;
-//     }
- 
-//     public void Hide()
-//     {
-//         panel.SetActive(false);
-//         Time.timeScale = 1f;
-//     }
- 
-//     public void OnNext()
-//     {
-//         Hide();
- 
-//         int currentLevel =
-//             PlayerPrefs.GetInt("CURRENT_LEVEL", 0);
- 
-//         PlayerPrefs.SetInt("CURRENT_LEVEL", currentLevel + 1);
- 
-//         if (LevelManager_1.Instance.IsLastLevel())
-//         {
-//             SceneManager.LoadScene("ChapterSelectScene");
-//             return;
-//         }
- 
-//         LevelManager_1.Instance.NextLevel();
-//     }
- 
-//     public void OnRestart()
-//     {
-//         Hide();
-//         LevelManager_1.Instance.RestartLevel();
-//     }
- 
-//     public void OnBackToHome()
-//     {
-//         Time.timeScale = 1f;
-//         SceneManager.LoadScene("ChapterSelectScene");
-//     }
-// }
- 
-
-
- using UnityEngine;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LevelCompleteUI_1 : MonoBehaviour
@@ -81,40 +15,88 @@ public class LevelCompleteUI_1 : MonoBehaviour
         }
 
         Instance = this;
-
-        if (panel == null)
-            panel = gameObject;
-
         panel.SetActive(false);
     }
 
+    // =========================
+    // SHOW LEVEL COMPLETE
+    // =========================
     public void Show()
     {
         panel.SetActive(true);
+
+        if (AdManager.Instance != null)
+            AdManager.Instance.HideBanner();
+
         Time.timeScale = 0f;
     }
 
+    // =========================
+    // HIDE LEVEL COMPLETE
+    // =========================
     public void Hide()
     {
         panel.SetActive(false);
         Time.timeScale = 1f;
+
+        if (AdManager.Instance != null)
+            AdManager.Instance.OnLevelComplete();
     }
 
+    // =========================
+    // NEXT LEVEL  ✅ FIXED
+    // =========================
     public void OnNext()
     {
         Hide();
+
+        int chapter = PlayerPrefs.GetInt("ACTIVE_CHAPTER", 1); // ✅ FIX
+        int currentLevel = PlayerPrefs.GetInt("CURRENT_LEVEL", 0);
+
+        // ⭐ Save stars
+        PlayerPrefs.SetInt($"CH{chapter}_LEVEL_STARS_{currentLevel}", 3);
+
+        // 🔓 Unlock next level
+        string unlockKey = $"CH{chapter}_UNLOCKED_LEVEL";
+        int unlocked = PlayerPrefs.GetInt(unlockKey, 0);
+
+        if (currentLevel + 1 > unlocked)
+            PlayerPrefs.SetInt(unlockKey, currentLevel + 1);
+
+        PlayerPrefs.Save();
+
+        // 🛑 Last level → Chapter Select
+        if (LevelManager_1.Instance.IsLastLevel())
+        {
+            PlayerPrefs.SetInt("OPEN_CHAPTER_POPUP", 1);
+            SceneManager.LoadScene("ChapterSelectScene");
+            return;
+        }
+
+        // ▶ Load next level
+        PlayerPrefs.SetInt("CURRENT_LEVEL", currentLevel + 1);
         LevelManager_1.Instance.NextLevel();
     }
 
+    // =========================
+    // RESTART LEVEL
+    // =========================
     public void OnRestart()
     {
         Hide();
         LevelManager_1.Instance.RestartLevel();
     }
 
+    // =========================
+    // BACK TO HOME
+    // =========================
     public void OnBackToHome()
     {
         Time.timeScale = 1f;
+
+        if (LevelManager_1.Instance != null)
+            Destroy(LevelManager_1.Instance.gameObject);
+
         SceneManager.LoadScene("ChapterSelectScene");
     }
 }

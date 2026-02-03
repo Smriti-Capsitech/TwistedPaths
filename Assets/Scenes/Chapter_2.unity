@@ -2222,16 +2222,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6d25b7e09153aea4bb1ab842022386a4, type: 2}
   - {fileID: 11400000, guid: 44fb0960eca29e743964e74dd49b9b21, type: 2}
   - {fileID: 11400000, guid: 18a78b24688e82a46bd5c8648bb3d69a, type: 2}
-  - {fileID: 11400000, guid: cd81172bb64a6b540845366f949ae340, type: 2}
-  - {fileID: 11400000, guid: 704c675df42d63c498dfad0140a86ab3, type: 2}
-  - {fileID: 11400000, guid: 5f39e10cfb0c63143ac12932bfb223c7, type: 2}
-  - {fileID: 11400000, guid: ecbcd12ce735574499721836bfac9264, type: 2}
-  - {fileID: 11400000, guid: 256f9a7d0c5cba14fa954d7700058634, type: 2}
-  - {fileID: 11400000, guid: 43f790c9e1f1fec438c66a18a0eb4ca2, type: 2}
-  - {fileID: 11400000, guid: 9bd8ce016f8029840a6e145dc41c5829, type: 2}
-  - {fileID: 11400000, guid: dc3c5784b6839a449b94ca1c55391b7d, type: 2}
-  - {fileID: 11400000, guid: 48c111a25de692742a537f7c9102e26d, type: 2}
-  - {fileID: 11400000, guid: 8547ec247cdd05f4cb669f557e71d3b9, type: 2}
   slotPrefab: {fileID: 8835970409664196696, guid: 36618a47e56c87440ba207495ca24427, type: 3}
   nodePrefab: {fileID: 6261621519563352903, guid: 4eaf91b036226514cad3f9af0d442705, type: 3}
 --- !u!1 &624309109
