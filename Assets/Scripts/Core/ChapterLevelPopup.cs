@@ -18,14 +18,10 @@
 
 //     void Start()
 //     {
-//         // 🔥 THIS IS THE MISSING PIECE
 //         if (PlayerPrefs.GetInt("OPEN_CHAPTER_POPUP", 0) == 1)
 //         {
 //             PlayerPrefs.DeleteKey("OPEN_CHAPTER_POPUP");
-
-//             // force enable self BEFORE opening
 //             gameObject.SetActive(true);
-
 //             OpenPopup();
 //         }
 //     }
@@ -70,7 +66,6 @@
 
 //         int chapter = PlayerPrefs.GetInt("ACTIVE_CHAPTER", 1);
 
-//         // 🔥 chapter-aware unlock key
 //         string unlockKey = chapter == 1
 //             ? "UNLOCKED_LEVEL"
 //             : $"CH{chapter}_UNLOCKED_LEVEL";
@@ -82,7 +77,9 @@
 //             GameObject btnObj = Instantiate(levelButtonPrefab, levelGrid);
 //             LevelButton lb = btnObj.GetComponent<LevelButton>();
 
-//             bool isUnlocked = i <= unlocked;
+//             // ✅ FIX IS HERE
+//             bool isUnlocked = i <= unlocked + 1;
+
 //             lb.Setup(i + 1, isUnlocked);
 //         }
 //     }
@@ -116,8 +113,6 @@ public class ChapterLevelPopup : MonoBehaviour
 
     public void OpenPopup()
     {
-        Debug.Log("Popup opened");
-
         if (chapterSelectPanel != null)
             chapterSelectPanel.SetActive(false);
 
@@ -152,21 +147,16 @@ public class ChapterLevelPopup : MonoBehaviour
         foreach (Transform child in levelGrid)
             Destroy(child.gameObject);
 
-        int chapter = PlayerPrefs.GetInt("ACTIVE_CHAPTER", 1);
-
-        string unlockKey = chapter == 1
-            ? "UNLOCKED_LEVEL"
-            : $"CH{chapter}_UNLOCKED_LEVEL";
-
-        int unlocked = PlayerPrefs.GetInt(unlockKey, 0);
+        // 🔥 ONLY SOURCE OF TRUTH
+        int unlockedUpTo = PlayerPrefs.GetInt("CURRENT_LEVEL", 0);
 
         for (int i = 0; i < TOTAL_LEVELS; i++)
         {
             GameObject btnObj = Instantiate(levelButtonPrefab, levelGrid);
             LevelButton lb = btnObj.GetComponent<LevelButton>();
 
-            // ✅ FIX IS HERE
-            bool isUnlocked = i <= unlocked + 1;
+            // ✅ UNLOCK ONE BY ONE
+            bool isUnlocked = i <= unlockedUpTo;
 
             lb.Setup(i + 1, isUnlocked);
         }

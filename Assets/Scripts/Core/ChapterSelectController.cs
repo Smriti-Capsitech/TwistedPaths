@@ -38,12 +38,9 @@ public class ChapterSelectController : MonoBehaviour
 
     void Start()
     {
-        // 🔥 CHECK IF COMING FROM LEVEL COMPLETE
         if (PlayerPrefs.GetInt("OPEN_CHAPTER_POPUP", 0) == 1)
         {
             PlayerPrefs.DeleteKey("OPEN_CHAPTER_POPUP");
-
-            // Ensure popup opens AFTER scene UI is ready
             Invoke(nameof(OpenPopupSafe), 0.05f);
         }
     }
@@ -57,14 +54,16 @@ public class ChapterSelectController : MonoBehaviour
     public void LoadChapter1()
     {
         PlayerPrefs.SetInt("ACTIVE_CHAPTER", 1);
-        PlayerPrefs.SetInt("CURRENT_LEVEL", 0);
+        PlayerPrefs.Save();
+
         chapterLevelPopup.OpenPopup();
     }
 
     public void LoadChapter2()
     {
         PlayerPrefs.SetInt("ACTIVE_CHAPTER", 2);
-        PlayerPrefs.SetInt("CURRENT_LEVEL", 0);
+        PlayerPrefs.Save();
+
         chapterLevelPopup.OpenPopup();
     }
 }
