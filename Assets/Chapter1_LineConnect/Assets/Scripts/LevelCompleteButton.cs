@@ -4,47 +4,61 @@
 
 // public class LevelCompleteButtons : MonoBehaviour
 // {
-//     public void NextLevel()
+//     // ▶ NEXT LEVEL
+//     // ▶ NEXT LEVEL
+// public void NextLevel()
+// {
+//     int currentLevel = PlayerPrefs.GetInt("CURRENT_LEVEL", 0);
+//     int activeChapter = PlayerPrefs.GetInt("ACTIVE_CHAPTER", 1);
+
+//     // 🔥 ADD THIS (CHAPTER 1 UNLOCK SAVE)
+//     string unlockKey = $"CH{activeChapter}_UNLOCKED_LEVEL";
+//     int unlocked = PlayerPrefs.GetInt(unlockKey, 0);
+
+//     if (currentLevel + 1 > unlocked)
+//         PlayerPrefs.SetInt(unlockKey, currentLevel + 1);
+
+//     // Chapter 1 ends at level 20 (index 19)
+//     if (activeChapter == 1 && currentLevel >= 19)
 //     {
-//         int currentLevel = PlayerPrefs.GetInt("CURRENT_LEVEL", 0);
-
-//         // ✅ Chapter 1 ends at Level 20 (index 19)
-//         if (currentLevel >= 19)
-//         {
-//             SceneManager.LoadScene("ChapterSelectScene");
-//             return;
-//         }
-
-//         // ✅ Otherwise go to next level
-//         PlayerPrefs.SetInt("CURRENT_LEVEL", currentLevel + 1);
-//         PlayerPrefs.Save();
-
-//         SceneManager.LoadScene("SampleScene");
+//         OpenChapterPopup();
+//         return;
 //     }
 
-//     // 🏠 MAIN MENU BUTTON
-//     public void MainMenu()
+//     PlayerPrefs.SetInt("CURRENT_LEVEL", currentLevel + 1);
+//     PlayerPrefs.Save();
+
+//     SceneManager.LoadScene("SampleScene");
+// }
+
+
+//     // 🔙 BACK BUTTON
+//     public void OnBack()
 //     {
-//         SceneManager.LoadScene("ChapterSelectScene");
+//         OpenChapterPopup();
 //     }
 
-//     public void OnBackToHome()
+//     // =========================
+//     // 🔥 SCENE-SAFE BACK LOGIC (FIXED)
+//     // =========================
+//     void OpenChapterPopup()
 //     {
-//         // ✅ Always restore time
 //         Time.timeScale = 1f;
 
-//         // ✅ Destroy ONLY Chapter 2 LevelManager (safe)
-//         if (LevelManager_1.Instance != null)
-//         {
-//             Destroy(LevelManager_1.Instance.gameObject);
-//         }
+//         // ✅ VERY IMPORTANT
+//         // Preserve current chapter so popup knows what to show
+//         int activeChapter = PlayerPrefs.GetInt("ACTIVE_CHAPTER", 1);
+//         PlayerPrefs.SetInt("ACTIVE_CHAPTER", activeChapter);
+
+//         // ✅ Tell ChapterSelectScene to open popup
+//         PlayerPrefs.SetInt("OPEN_CHAPTER_POPUP", 1);
 
 //         SceneManager.LoadScene("ChapterSelectScene");
 //     }
 // }
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+ 
 public class LevelCompleteButtons : MonoBehaviour
 {
     // ▶ NEXT LEVEL
@@ -52,41 +66,42 @@ public class LevelCompleteButtons : MonoBehaviour
     {
         int currentLevel = PlayerPrefs.GetInt("CURRENT_LEVEL", 0);
         int activeChapter = PlayerPrefs.GetInt("ACTIVE_CHAPTER", 1);
-
+ 
         // Chapter 1 ends at level 20 (index 19)
         if (activeChapter == 1 && currentLevel >= 19)
         {
             OpenChapterPopup();
             return;
         }
-
+ 
         PlayerPrefs.SetInt("CURRENT_LEVEL", currentLevel + 1);
         PlayerPrefs.Save();
-
+ 
         SceneManager.LoadScene("SampleScene");
     }
-
+ 
     // 🔙 BACK BUTTON
     public void OnBack()
     {
         OpenChapterPopup();
     }
-
+ 
     // =========================
     // 🔥 SCENE-SAFE BACK LOGIC (FIXED)
     // =========================
     void OpenChapterPopup()
     {
         Time.timeScale = 1f;
-
+ 
         // ✅ VERY IMPORTANT
         // Preserve current chapter so popup knows what to show
         int activeChapter = PlayerPrefs.GetInt("ACTIVE_CHAPTER", 1);
         PlayerPrefs.SetInt("ACTIVE_CHAPTER", activeChapter);
-
+ 
         // ✅ Tell ChapterSelectScene to open popup
         PlayerPrefs.SetInt("OPEN_CHAPTER_POPUP", 1);
-
+ 
         SceneManager.LoadScene("ChapterSelectScene");
     }
 }
+ 

@@ -16,5 +16,5 @@ MonoBehaviour:
   initialRope: 0000000006000000
   showPreview: 1
   timeLimit: 30
-  hasHint: 0
+  hasHint: 1
   hintDots: 04000000

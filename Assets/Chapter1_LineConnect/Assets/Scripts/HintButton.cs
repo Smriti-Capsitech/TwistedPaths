@@ -53,10 +53,14 @@
 
 //         Time.timeScale = 0f;
 
-//         // 🔥 Hide only gameplay visuals
+//         // Hide gameplay board
 //         if (circularBoard != null)
 //             circularBoard.SetActive(false);
 
+//         // Hide rope visuals ONLY (not GameObjects)
+//         SetRopeVisuals(false);
+
+//         // Hide line
 //         if (lineController != null)
 //         {
 //             LineRenderer lr = lineController.GetComponent<LineRenderer>();
@@ -81,6 +85,9 @@
 //         if (circularBoard != null)
 //             circularBoard.SetActive(true);
 
+//         // Restore rope visuals
+//         SetRopeVisuals(true);
+
 //         if (lineController != null)
 //         {
 //             LineRenderer lr = lineController.GetComponent<LineRenderer>();
@@ -101,6 +108,8 @@
 
 //         if (circularBoard != null)
 //             circularBoard.SetActive(true);
+
+//         SetRopeVisuals(true);
 
 //         if (lineController != null)
 //         {
@@ -127,6 +136,28 @@
 //     {
 //         hintUsed = false;
 //         isShowing = false;
+//     }
+
+//     // =========================
+//     // 🔥 ROPE VISUAL FIX (FINAL)
+//     // =========================
+//     void SetRopeVisuals(bool visible)
+//     {
+//         RopeNode[] ropeNodes =
+//             Object.FindObjectsByType<RopeNode>(FindObjectsSortMode.None);
+
+//         foreach (var node in ropeNodes)
+//         {
+//             if (node == null) continue;
+
+//             // Hide sprite
+//             SpriteRenderer sr = node.GetComponent<SpriteRenderer>();
+//             if (sr != null) sr.enabled = visible;
+
+//             // Disable interaction
+//             Collider2D col = node.GetComponent<Collider2D>();
+//             if (col != null) col.enabled = visible;
+//         }
 //     }
 // }
 using UnityEngine;
@@ -169,7 +200,42 @@ public class HintButton : MonoBehaviour
     IEnumerator FlashDots(int[] indices)
     {
         isShowing = true;
-        yield return new WaitForSeconds(hintDuration);
+
+        CircularDotGenerator dotGen =
+            Object.FindAnyObjectByType<CircularDotGenerator>();
+
+        if (dotGen == null)
+        {
+            isShowing = false;
+            yield break;
+        }
+
+        SpriteRenderer[] highlighted = new SpriteRenderer[indices.Length];
+
+        // 🔥 Highlight dots
+        for (int i = 0; i < indices.Length; i++)
+        {
+            int idx = indices[i];
+            if (idx < 0 || idx >= dotGen.dots.Count) continue;
+
+            CircleDot dot = dotGen.dots[idx];
+            SpriteRenderer sr = dot.GetComponent<SpriteRenderer>();
+            if (sr == null) continue;
+
+            highlighted[i] = sr;
+            sr.color = hintColor;
+        }
+
+        // ⛔ Pause-safe wait
+        yield return new WaitForSecondsRealtime(hintDuration);
+
+        // 🔄 Restore colors
+        foreach (var sr in highlighted)
+        {
+            if (sr != null)
+                sr.color = Color.white;
+        }
+
         isShowing = false;
     }
 
@@ -183,14 +249,11 @@ public class HintButton : MonoBehaviour
 
         Time.timeScale = 0f;
 
-        // Hide gameplay board
         if (circularBoard != null)
             circularBoard.SetActive(false);
 
-        // Hide rope visuals ONLY (not GameObjects)
         SetRopeVisuals(false);
 
-        // Hide line
         if (lineController != null)
         {
             LineRenderer lr = lineController.GetComponent<LineRenderer>();
@@ -215,7 +278,6 @@ public class HintButton : MonoBehaviour
         if (circularBoard != null)
             circularBoard.SetActive(true);
 
-        // Restore rope visuals
         SetRopeVisuals(true);
 
         if (lineController != null)
@@ -232,6 +294,7 @@ public class HintButton : MonoBehaviour
     {
         Time.timeScale = 1f;
         isPaused = false;
+        ResetHints();
 
         if (settingsPanel != null)
             settingsPanel.SetActive(false);
@@ -269,7 +332,7 @@ public class HintButton : MonoBehaviour
     }
 
     // =========================
-    // 🔥 ROPE VISUAL FIX (FINAL)
+    // 🔥 ROPE VISUALS
     // =========================
     void SetRopeVisuals(bool visible)
     {
@@ -280,11 +343,9 @@ public class HintButton : MonoBehaviour
         {
             if (node == null) continue;
 
-            // Hide sprite
             SpriteRenderer sr = node.GetComponent<SpriteRenderer>();
             if (sr != null) sr.enabled = visible;
 
-            // Disable interaction
             Collider2D col = node.GetComponent<Collider2D>();
             if (col != null) col.enabled = visible;
         }

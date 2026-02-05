@@ -4,83 +4,53 @@
 
 // public class ChapterLevelPopup : MonoBehaviour
 // {
-//     [Header("UI References")]
 //     public GameObject chapterSelectPanel;
-//     public TextMeshProUGUI progressText;
 //     public Transform levelGrid;
 //     public GameObject levelButtonPrefab;
 
-//     [Header("Backgrounds")]
 //     public GameObject chapter1Background;
 //     public GameObject chapter2Background;
 
-//     private const int TOTAL_LEVELS = 30;
-
-//     void Start()
-//     {
-//         if (PlayerPrefs.GetInt("OPEN_CHAPTER_POPUP", 0) == 1)
-//         {
-//             PlayerPrefs.DeleteKey("OPEN_CHAPTER_POPUP");
-//             gameObject.SetActive(true);
-//             OpenPopup();
-//         }
-//     }
+//     const int TOTAL_LEVELS = 30;
 
 //     public void OpenPopup()
 //     {
-//         Debug.Log("Popup opened");
-
+//         // Hide chapter select panel if exists
 //         if (chapterSelectPanel != null)
 //             chapterSelectPanel.SetActive(false);
 
 //         gameObject.SetActive(true);
 //         transform.SetAsLastSibling();
 
-//         ApplyChapterBackground();
-//         PopulateLevels();
-//     }
-
-//     void ApplyChapterBackground()
-//     {
 //         int chapter = PlayerPrefs.GetInt("ACTIVE_CHAPTER", 1);
 
-//         if (chapter1Background != null)
+//         if (chapter1Background)
 //             chapter1Background.SetActive(chapter == 1);
 
-//         if (chapter2Background != null)
+//         if (chapter2Background)
 //             chapter2Background.SetActive(chapter == 2);
+
+//         PopulateLevels(chapter);
 //     }
 
-//     public void ClosePopup()
+//     void PopulateLevels(int chapter)
 //     {
-//         gameObject.SetActive(false);
+//         // 🔥 clear old buttons
+//         for (int i = levelGrid.childCount - 1; i >= 0; i--)
+//             Destroy(levelGrid.GetChild(i).gameObject);
 
-//         if (chapterSelectPanel != null)
-//             chapterSelectPanel.SetActive(true);
-//     }
-
-//     void PopulateLevels()
-//     {
-//         foreach (Transform child in levelGrid)
-//             Destroy(child.gameObject);
-
-//         int chapter = PlayerPrefs.GetInt("ACTIVE_CHAPTER", 1);
-
-//         string unlockKey = chapter == 1
-//             ? "UNLOCKED_LEVEL"
-//             : $"CH{chapter}_UNLOCKED_LEVEL";
-
+//         string unlockKey = $"CH{chapter}_UNLOCKED_LEVEL";
 //         int unlocked = PlayerPrefs.GetInt(unlockKey, 0);
+
+//         // Debug safety (you can remove later)
+//         Debug.Log($"[Chapter {chapter}] Unlocked up to level index: {unlocked}");
 
 //         for (int i = 0; i < TOTAL_LEVELS; i++)
 //         {
-//             GameObject btnObj = Instantiate(levelButtonPrefab, levelGrid);
-//             LevelButton lb = btnObj.GetComponent<LevelButton>();
+//             GameObject b = Instantiate(levelButtonPrefab, levelGrid);
 
-//             // ✅ FIX IS HERE
-//             bool isUnlocked = i <= unlocked + 1;
-
-//             lb.Setup(i + 1, isUnlocked);
+//             bool isUnlocked = i <= unlocked; // 🔓 key logic
+//             b.GetComponent<LevelButton>().Setup(i + 1, isUnlocked);
 //         }
 //     }
 // }
@@ -89,27 +59,14 @@ using TMPro;
 
 public class ChapterLevelPopup : MonoBehaviour
 {
-    [Header("UI References")]
     public GameObject chapterSelectPanel;
-    public TextMeshProUGUI progressText;
     public Transform levelGrid;
     public GameObject levelButtonPrefab;
 
-    [Header("Backgrounds")]
     public GameObject chapter1Background;
     public GameObject chapter2Background;
 
-    private const int TOTAL_LEVELS = 30;
-
-    void Start()
-    {
-        if (PlayerPrefs.GetInt("OPEN_CHAPTER_POPUP", 0) == 1)
-        {
-            PlayerPrefs.DeleteKey("OPEN_CHAPTER_POPUP");
-            gameObject.SetActive(true);
-            OpenPopup();
-        }
-    }
+    const int TOTAL_LEVELS = 30;
 
     public void OpenPopup()
     {
@@ -119,46 +76,28 @@ public class ChapterLevelPopup : MonoBehaviour
         gameObject.SetActive(true);
         transform.SetAsLastSibling();
 
-        ApplyChapterBackground();
-        PopulateLevels();
-    }
-
-    void ApplyChapterBackground()
-    {
         int chapter = PlayerPrefs.GetInt("ACTIVE_CHAPTER", 1);
 
-        if (chapter1Background != null)
-            chapter1Background.SetActive(chapter == 1);
+        if (chapter1Background) chapter1Background.SetActive(chapter == 1);
+        if (chapter2Background) chapter2Background.SetActive(chapter == 2);
 
-        if (chapter2Background != null)
-            chapter2Background.SetActive(chapter == 2);
+        PopulateLevels(chapter);
     }
 
-    public void ClosePopup()
+    void PopulateLevels(int chapter)
     {
-        gameObject.SetActive(false);
+        for (int i = levelGrid.childCount - 1; i >= 0; i--)
+            Destroy(levelGrid.GetChild(i).gameObject);
 
-        if (chapterSelectPanel != null)
-            chapterSelectPanel.SetActive(true);
-    }
+        string unlockKey = $"CH{chapter}_UNLOCKED_LEVEL";
+        int unlocked = PlayerPrefs.GetInt(unlockKey, 0);
 
-    void PopulateLevels()
-    {
-        foreach (Transform child in levelGrid)
-            Destroy(child.gameObject);
-
-        // 🔥 ONLY SOURCE OF TRUTH
-        int unlockedUpTo = PlayerPrefs.GetInt("CURRENT_LEVEL", 0);
+        Debug.Log($"[Chapter {chapter}] Unlocked up to level index: {unlocked}");
 
         for (int i = 0; i < TOTAL_LEVELS; i++)
         {
-            GameObject btnObj = Instantiate(levelButtonPrefab, levelGrid);
-            LevelButton lb = btnObj.GetComponent<LevelButton>();
-
-            // ✅ UNLOCK ONE BY ONE
-            bool isUnlocked = i <= unlockedUpTo;
-
-            lb.Setup(i + 1, isUnlocked);
+            GameObject b = Instantiate(levelButtonPrefab, levelGrid);
+            b.GetComponent<LevelButton>().Setup(i + 1, i <= unlocked);
         }
     }
 }

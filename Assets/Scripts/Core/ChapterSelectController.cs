@@ -5,28 +5,44 @@
 // {
 //     public ChapterLevelPopup chapterLevelPopup;
 
+//     void Start()
+//     {
+//         if (PlayerPrefs.GetInt("OPEN_CHAPTER_POPUP", 0) == 1)
+//         {
+//             PlayerPrefs.DeleteKey("OPEN_CHAPTER_POPUP");
+//             Invoke(nameof(OpenPopupSafe), 0.1f); // ⏱ small safe delay
+//         }
+//     }
+
+//     void OpenPopupSafe()
+//     {
+//         chapterLevelPopup.gameObject.SetActive(true);
+//         chapterLevelPopup.OpenPopup(); // 🔥 force rebuild every time
+//     }
+
 //     public void LoadChapter1()
 //     {
-//         Debug.Log("Chapter 1 button clicked");
-
 //         PlayerPrefs.SetInt("ACTIVE_CHAPTER", 1);
-//         PlayerPrefs.SetInt("CURRENT_LEVEL", 0);
 
-//         GameManager_1.Instance.SetChapter(ChapterType.Chapter1_LineConnect);
+//         if (!PlayerPrefs.HasKey("CH1_UNLOCKED_LEVEL"))
+//             PlayerPrefs.SetInt("CH1_UNLOCKED_LEVEL", 0);
 
+//         PlayerPrefs.Save();
+
+//         chapterLevelPopup.gameObject.SetActive(true);
 //         chapterLevelPopup.OpenPopup();
 //     }
 
 //     public void LoadChapter2()
 //     {
-//         Debug.Log("Chapter 2 button clicked");
-
 //         PlayerPrefs.SetInt("ACTIVE_CHAPTER", 2);
-//         PlayerPrefs.SetInt("CURRENT_LEVEL", 0);
 
-//         // ❌ no scene load
-//         // ❌ no new popup
+//         if (!PlayerPrefs.HasKey("CH2_UNLOCKED_LEVEL"))
+//             PlayerPrefs.SetInt("CH2_UNLOCKED_LEVEL", 0);
 
+//         PlayerPrefs.Save();
+
+//         chapterLevelPopup.gameObject.SetActive(true);
 //         chapterLevelPopup.OpenPopup();
 //     }
 // }
@@ -41,29 +57,39 @@ public class ChapterSelectController : MonoBehaviour
         if (PlayerPrefs.GetInt("OPEN_CHAPTER_POPUP", 0) == 1)
         {
             PlayerPrefs.DeleteKey("OPEN_CHAPTER_POPUP");
-            Invoke(nameof(OpenPopupSafe), 0.05f);
+            Invoke(nameof(OpenPopupSafe), 0.1f);
         }
     }
 
     void OpenPopupSafe()
     {
-        if (chapterLevelPopup != null)
-            chapterLevelPopup.OpenPopup();
+        chapterLevelPopup.gameObject.SetActive(true);
+        chapterLevelPopup.OpenPopup();
     }
 
     public void LoadChapter1()
     {
         PlayerPrefs.SetInt("ACTIVE_CHAPTER", 1);
+
+        if (!PlayerPrefs.HasKey("CH1_UNLOCKED_LEVEL"))
+            PlayerPrefs.SetInt("CH1_UNLOCKED_LEVEL", 0);
+
         PlayerPrefs.Save();
 
+        chapterLevelPopup.gameObject.SetActive(true);
         chapterLevelPopup.OpenPopup();
     }
 
     public void LoadChapter2()
     {
         PlayerPrefs.SetInt("ACTIVE_CHAPTER", 2);
+
+        if (!PlayerPrefs.HasKey("CH2_UNLOCKED_LEVEL"))
+            PlayerPrefs.SetInt("CH2_UNLOCKED_LEVEL", 0);
+
         PlayerPrefs.Save();
 
+        chapterLevelPopup.gameObject.SetActive(true);
         chapterLevelPopup.OpenPopup();
     }
 }

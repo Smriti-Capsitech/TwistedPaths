@@ -1,5 +1,5 @@
 
-//  using UnityEngine;
+// using UnityEngine;
 // using UnityEngine.SceneManagement;
 // using System.Collections;
 // using System.Collections.Generic;
@@ -16,50 +16,42 @@
 //     // MAIN CHECK (GRAPH BASED)
 //     // =========================
 //     public void CheckNow()
-// {
-//     Debug.Log("🔎 CheckNow CALLED");
-
-//     if (completed)
 //     {
-//         Debug.Log("⛔ Already completed");
-//         return;
+//         Debug.Log("🔎 CheckNow CALLED");
+
+//         if (completed)
+//         {
+//             Debug.Log("⛔ Already completed");
+//             return;
+//         }
+
+//         List<int> playerNodes = player.GetSnappedNodes();
+//         List<int> targetNodes = new List<int>(target.pattern);
+
+
+//         HashSet<Edge> playerEdges = BuildEdgeSet(playerNodes);
+//         HashSet<Edge> targetEdges = BuildEdgeSet(targetNodes);
+
+//         Debug.Log("🟦 PLAYER EDGES: " + EdgeLog(playerEdges));
+//         Debug.Log("🟥 TARGET EDGES: " + EdgeLog(targetEdges));
+
+//         if (!EdgeSetsEqual(playerEdges, targetEdges))
+//         {
+//             Debug.Log("❌ EDGE MISMATCH");
+//             return;
+//         }
+
+//         // ✅ DO NOT BLOCK IF ROPE WAS NOT MODIFIED
+//         Debug.Log("🎉 LEVEL COMPLETE");
+
+//         completed = true;
+
+//         SaveLevelProgress();
+//         StartCoroutine(LoadLevelCompleteAfterDelay());
+
+//         if (AdManager.Instance != null)
+//             AdManager.Instance.OnLevelComplete();
 //     }
-
-//     bool modified = player.PlayerModifiedRope();
-//     Debug.Log("🧩 PlayerModifiedRope = " + modified);
-
-//     HashSet<Edge> playerEdges =
-//         BuildEdgeSet(new List<int>(player.GetSnappedNodes()));
-
-//     HashSet<Edge> targetEdges =
-//         BuildEdgeSet(new List<int>(target.pattern));
-
-//     Debug.Log($"📐 PlayerEdges={playerEdges.Count}, TargetEdges={targetEdges.Count}");
-
-//     if (!EdgeSetsEqual(playerEdges, targetEdges))
-//     {
-//         Debug.Log("❌ Edge mismatch");
-//         return;
-//     }
-
-//     Debug.Log("✅ EDGE MATCH");
-
-//     if (!modified)
-//     {
-//         Debug.Log("❌ BLOCKED by PlayerModifiedRope()");
-//         return;
-//     }
-
-//     Debug.Log("🎉 LEVEL COMPLETE");
-//     completed = true;
-
-//     SaveLevelProgress();
-//     StartCoroutine(LoadLevelCompleteAfterDelay());
-
-//     if (AdManager.Instance != null)
-//         AdManager.Instance.OnLevelComplete();
-// }
-
 
 //     // =========================
 //     // 🔐 SAVE UNLOCK PROGRESS
@@ -198,7 +190,6 @@ public class LevelCompleteChecker : MonoBehaviour
         List<int> playerNodes = player.GetSnappedNodes();
         List<int> targetNodes = new List<int>(target.pattern);
 
-
         HashSet<Edge> playerEdges = BuildEdgeSet(playerNodes);
         HashSet<Edge> targetEdges = BuildEdgeSet(targetNodes);
 
@@ -211,7 +202,6 @@ public class LevelCompleteChecker : MonoBehaviour
             return;
         }
 
-        // ✅ DO NOT BLOCK IF ROPE WAS NOT MODIFIED
         Debug.Log("🎉 LEVEL COMPLETE");
 
         completed = true;
@@ -224,26 +214,26 @@ public class LevelCompleteChecker : MonoBehaviour
     }
 
     // =========================
-    // 🔐 SAVE UNLOCK PROGRESS
+    // 🔐 SAVE UNLOCK PROGRESS (FIXED)
     // =========================
     void SaveLevelProgress()
     {
         int chapter = PlayerPrefs.GetInt("ACTIVE_CHAPTER", 1);
         int currentLevel = PlayerPrefs.GetInt("CURRENT_LEVEL", 0);
 
-        string unlockKey = chapter == 1
-            ? "UNLOCKED_LEVEL"
-            : $"CH{chapter}_UNLOCKED_LEVEL";
+        // 🔥 FIX: ALWAYS use chapter-based key
+        string unlockKey = $"CH{chapter}_UNLOCKED_LEVEL";
 
         int unlocked = PlayerPrefs.GetInt(unlockKey, 0);
 
+        // 🔥 FIX: unlock next level index
         if (currentLevel + 1 > unlocked)
         {
             PlayerPrefs.SetInt(unlockKey, currentLevel + 1);
             PlayerPrefs.Save();
         }
 
-        Debug.Log($"🔓 Progress saved → Level {currentLevel + 1}");
+        Debug.Log($"🔓 [Chapter {chapter}] Progress saved → Level {currentLevel + 1}");
     }
 
     // =========================
