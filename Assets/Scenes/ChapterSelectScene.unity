@@ -494,8 +494,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: BACK
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c9520f44c3cc2c4487ebc237097946f, type: 2}
-  m_sharedMaterial: {fileID: -3851203234568155048, guid: 8c9520f44c3cc2c4487ebc237097946f, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2298346df50b43748903f753a9a4d389, type: 2}
+  m_sharedMaterial: {fileID: -5538992803387428041, guid: 2298346df50b43748903f753a9a4d389, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -605,7 +605,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 86.859406, y: -615.7118}
+  m_AnchoredPosition: {x: 86.85947, y: -1083.0002}
   m_SizeDelta: {x: 100, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &168460309
@@ -1622,8 +1622,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000030517578, y: -0.000061035156}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 44.009796, y: 0}
+  m_SizeDelta: {x: 0, y: 3272.1895}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &477005393
 MonoBehaviour:
@@ -1638,7 +1638,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grid: {fileID: 168460309}
-  totalItems: 30
+  totalItems: 70
 --- !u!1 &492659675
 GameObject:
   m_ObjectHideFlags: 0
@@ -1722,7 +1722,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 639453134}
   m_Direction: 2
   m_Value: 1
-  m_Size: 1
+  m_Size: 0.20396619
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2323,7 +2323,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 575163628}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0.7960338}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -3268,8 +3268,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Option A
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c9520f44c3cc2c4487ebc237097946f, type: 2}
-  m_sharedMaterial: {fileID: -3851203234568155048, guid: 8c9520f44c3cc2c4487ebc237097946f, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2298346df50b43748903f753a9a4d389, type: 2}
+  m_sharedMaterial: {fileID: -5538992803387428041, guid: 2298346df50b43748903f753a9a4d389, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6217,7 +6217,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chapterSelectPanel: {fileID: 1684555477}
-  progressText: {fileID: 0}
   levelGrid: {fileID: 168460308}
   levelButtonPrefab: {fileID: 3202679963723213250, guid: ba76d1dabb575764ea13fdd25b08f306, type: 3}
   chapter1Background: {fileID: 406578409}

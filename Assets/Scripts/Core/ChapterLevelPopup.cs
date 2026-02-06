@@ -66,7 +66,7 @@ public class ChapterLevelPopup : MonoBehaviour
     public GameObject chapter1Background;
     public GameObject chapter2Background;
 
-    const int TOTAL_LEVELS = 30;
+    const int TOTAL_LEVELS = 55;
 
     public void OpenPopup()
     {
